@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Vendedor.Models.HistPedido>
+
+@{
+    ViewBag.Title = "HistoricoPedido";
+    
+}
+
+<h2>Histórico do Pedido - @ViewData["Pedido"]</h2>
+
+<p>
+    @Html.ActionLink("Retornar a Tela Princial", "../Home/Index")
+</p>
+
+<table width="700" border="1" class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.CodPed)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.NroSeq)
+        </th>*@
+        <th width="200">
+            <b>Data da Ocorrencia</b>
+            @*@Html.DisplayNameFor(model => model.DataOcorrencia)*@
+        </th>
+        <th width="500">
+            <b>Observação</b>
+            @*@Html.DisplayNameFor(model => model.Obs)*@
+        </th>
+     
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.CodPed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NroSeq)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.DataOcorrencia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Obs)
+        </td>
+        <!--<td>-->
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        <!--</td>-->
+    </tr>
+}
+
+</table>
