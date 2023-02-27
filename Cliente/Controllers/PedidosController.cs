@@ -153,8 +153,7 @@ namespace client.Controllers
 
             AvaliacaoPedido Novo = new AvaliacaoPedido();
             Novo.CodPedido = Convert.ToInt32(id);
-            Novo.Avaliacao = "Escreva o motivo da devolução...";
-
+            Novo.Avaliacao = "Descreva o motivo da devolução...";
             return View(Novo);
         }
 
@@ -174,6 +173,8 @@ namespace client.Controllers
             else
                 throw new Exception(response.ReasonPhrase);
         }
+
+   
 
 
 

@@ -38,44 +38,7 @@ namespace Transportadora.Controllers
             }
         }
 
-        public async Task<ActionResult> RetirarPedidos()
-        {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/ENVIADO");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var resultado = await response.Content.ReadAsStringAsync();
-                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
-                return View(Lista);
-            }
-            else return View();
-        }
-
-        public async Task<ActionResult> EntregarPedidos ()
-        {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/EM_TRANSPORTE");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var resultado = await response.Content.ReadAsStringAsync();
-                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
-                return View(Lista);
-            }
-            else return View();
-        }
-
-        public async Task<ActionResult> PedidosEntregues()
-        {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/ENTREGUE");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var resultado = await response.Content.ReadAsStringAsync();
-                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
-                return View(Lista);
-            }
-            else return View();
-        }
+   
 
         public async Task<ActionResult> MudarStatusRetirado(string id)
         {
@@ -118,10 +81,145 @@ namespace Transportadora.Controllers
                 throw new Exception(response.ReasonPhrase);
         }
 
+        public async Task<ActionResult> PedidosDevolvidos()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+
+
+        public async Task<ActionResult> MudarStatusColetado(string id)
+        {
+            Status Mudou = new Status();
+
+            Mudou.CodPedido = Convert.ToInt32(id);
+            Mudou.NovoStatus = "DEVOLVIDO_TRANSPORTADORA";
+            Mudou.Obs = "[TRANSPORTADORA] Pedido Coletado com o cliente";
+
+            string json = JsonConvert.SerializeObject(Mudou);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/MudarStatusPedido", content);
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("EntregarPedidos");
+            else
+                throw new Exception(response.ReasonPhrase);
+        }
+
+       
+
+        public async Task<ActionResult> MudarStatusDevolvivo(string id)
+        {
+            Status Mudou = new Status();
+
+            Mudou.CodPedido = Convert.ToInt32(id);
+            Mudou.NovoStatus = "DEVOLVIDO_VENDEDOR";
+            Mudou.Obs = "[TRANSPORTADORA] Pedido Devolvido ao Vendedor";
+
+            string json = JsonConvert.SerializeObject(Mudou);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/MudarStatusPedido", content);
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("EntregarPedidos");
+            else
+                throw new Exception(response.ReasonPhrase);
+        }
+
         //// GET: Pedidos
         //public ActionResult Index()
         //{
         //    return View();
         //}
+
+        public async Task<ActionResult> RetirarPedidos()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/ENVIADO");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+
+
+
+        public async Task<ActionResult> EntregarPedidos()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/EM_TRANSPORTE");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+
+        public async Task<ActionResult> PedidosEntregues()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/ENTREGUE");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+        public async Task<ActionResult> ListaDevolvidosCliente()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_CLIENTE");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+
+        public async Task<ActionResult> ListaDevolvidosVendedor()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_CLIENTE");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+
+        public async Task<ActionResult> ListaDevolvidosEntregueVendedor()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_VENDEDOR");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
     }
 }

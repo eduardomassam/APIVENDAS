@@ -32,7 +32,14 @@ namespace APIVENDAS.Controllers
             return VendasCRUD.ListarHistorico(id);
         }
 
-    
+        ////RETORNA data de um pedido entregue
+        //[HttpGet, Route("DataEntrega/{id}")]
+        //public HistPedido DataEntrega(int id)
+        //{
+        //    return VendasCRUD.DataEntrega(id);
+        //}
+
+
 
         //Retorna todos os pedidos
         [HttpGet, Route("ListarPedidos")]
@@ -126,7 +133,7 @@ namespace APIVENDAS.Controllers
 
         //Devolver pedido durante 7 dias da chegada
         [HttpPost, Route("DevolverPedido")]
-        public string PedidoDevolvido(AvaliacaoPedido Info, AvaliacaoPedido Data)
+        public string PedidoDevolvido(AvaliacaoPedido Info)
         {
             try
             {
@@ -140,6 +147,47 @@ namespace APIVENDAS.Controllers
             }
         }
 
+        [HttpPost, Route("DevolverPedidoTransportadora")]
+        public string DevolverPedidoTransportadora(Status Info)
+        {
+            try
+            {
+                VendasCRUD.DevolverPedidoTransportadora(Info);
+                return "Ok";
+            }
+            catch (Exception err)
+            {
+                return err.Message;
+            }
+        }
+
+        [HttpPost, Route("DevolverPedidoVendedor")]
+        public string DevolverPedidoVendedor(Status Info)
+        {
+            try
+            {
+                VendasCRUD.DevolverPedidoTransportadora(Info);
+                return "Ok";
+            }
+            catch (Exception err)
+            {
+                return err.Message;
+            }
+        }
+
+        [HttpPost, Route("DevolverPedidoVendedorAceite")]
+        public string DevolverPedidoVendedorAceite(Status Info)
+        {
+            try
+            {
+                VendasCRUD.DevolverPedidoTransportadora(Info);
+                return "Ok";
+            }
+            catch (Exception err)
+            {
+                return err.Message;
+            }
+        }
 
     }
 }

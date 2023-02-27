@@ -117,6 +117,9 @@
     <Content Include="Views\Pedidos\RetirarPedidos.cshtml" />
     <Content Include="Views\Pedidos\EntregarPedidos.cshtml" />
     <Content Include="Views\Pedidos\PedidosEntregues.cshtml" />
+    <Content Include="Views\Pedidos\ListaDevolvidosCliente.cshtml" />
+    <Content Include="Views\Pedidos\ListaDevolvidosVendedor.cshtml" />
+    <Content Include="Views\Pedidos\ListaDevolvidosEntregueVendedor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

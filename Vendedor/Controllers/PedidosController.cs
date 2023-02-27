@@ -89,6 +89,25 @@ namespace Vendedor.Controllers
                 throw new Exception(response.ReasonPhrase);
         }
 
+        public async Task<ActionResult> MudarStatusDevolvido(string id)
+        {
+            Status Mudou = new Status();
+            Mudou.CodPedido = Convert.ToInt32(id);
+            Mudou.NovoStatus = "DEVOLUCAO_ACEITA";
+            Mudou.Obs = "[VENDEDOR] Pedido devolvido com sucesso";
+
+            string json = JsonConvert.SerializeObject(Mudou);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/MudarStatusPedido", content);
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("PedidosDevolvidos");
+            else
+                throw new Exception(response.ReasonPhrase);
+        }
+
         public async Task<ActionResult> HistoricoPedido (string id)
         {
             ViewData["Pedido"] = id;
@@ -129,6 +148,53 @@ namespace Vendedor.Controllers
             HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
 
             var response = await client.PostAsync("api/vendas/CancelarPedido", content);
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("ListaPedidos");
+            else
+                throw new Exception(response.ReasonPhrase);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> VendedorAceitarDevolucao(VendedorAvaliacaoPedido Mudou)
+        {
+            Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
+
+            string json = JsonConvert.SerializeObject(Mudou);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/DevolverPedidoVendedorAceite", content);
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("ListaPedidos");
+            else
+                throw new Exception(response.ReasonPhrase);
+        }
+
+        public async Task<ActionResult> PedidosDevolvidos()
+        {
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_VENDEDOR");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> VedendorAceitarDevolucao(VendedorAvaliacaoPedido Mudou)
+        {
+            Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
+
+            string json = JsonConvert.SerializeObject(Mudou);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/DevolverPedidoVendedorAceite", content);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("ListaPedidos");

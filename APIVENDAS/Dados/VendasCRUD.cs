@@ -21,6 +21,7 @@ namespace APIVENDAS.Dados
             }
         }
 
+
         //RETORNA todo o historico de um pedido a partir de seu codigo
         public static IEnumerable<HistPedido> ListarHistorico (int Codigo)
         {
@@ -31,14 +32,21 @@ namespace APIVENDAS.Dados
             }
         }
 
-        //RETORNA Data Entrega
-        public static HistPedido DataEntrega(int Codigo)
-        {
-            using (var ctx = new VendasEntities())
-            {
-                return ctx.HistPedido.LastOrDefault(p => p.CodPed.Equals(Codigo));
-            }
-        }
+        ////RETORNA Data Entrega
+        //public static HistPedido DataEntrega(int Codigo)
+        //{
+        //    using (var ctx = new VendasEntities())
+        //    {                
+        //        var Pesquisa = (from A in ctx.HistPedido where A.CodPed == Codigo select A).ToList();
+        //        var x = Pesquisa.Last();
+        //        var y = x.DataOcorrencia;
+        //        return Pesquisa;
+        //    }
+        //}
+
+      
+
+
 
 
 
@@ -158,7 +166,8 @@ namespace APIVENDAS.Dados
             IncluirHistorico(Alt.Cod, Info.Avaliacao);
 
         }
-
+        
+        //Cliente cancelar pedido não enviado ainda
         public static void CancelarPedido(AvaliacaoPedido Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
@@ -170,15 +179,46 @@ namespace APIVENDAS.Dados
             IncluirHistorico(Alt.Cod, Info.Avaliacao);
         }
 
+        //Devolver pedido dentro de 7 dias da entrega
         public static void DevolverPedido(AvaliacaoPedido Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "DEVOLVIDO";
+            Alt.Status = "DEVOLVIDO_CLIENTE";
             AlterarPedido(Alt);
 
             Info.Avaliacao = "[CLIENTE] Motivo da Devolução: " + Info.Avaliacao;
 
             IncluirHistorico(Alt.Cod, Info.Avaliacao);
+        }
+
+        //Transportadora coletar o pedido com o cliente para devolução ao vendedor
+        public static void DevolverPedidoTransportadora(Status Info)
+        {
+            Pedidos Alt = BuscarPedido(Info.CodPedido);
+            Alt.Status = "DEVOLVIDO_TRANSPORTADORA";
+            AlterarPedido(Alt);
+
+            IncluirHistorico(Alt.Cod, Info.Obs);
+        }
+
+        //Transportadora entregar o pedido devolvivo ao vendedor
+        public static void DevolverPedidoVendedor(Status Info)
+        {
+            Pedidos Alt = BuscarPedido(Info.CodPedido);
+            Alt.Status = "DEVOLVIDO_VENDEDOR";
+            AlterarPedido(Alt);
+
+            IncluirHistorico(Alt.Cod, Info.Obs);
+        }
+
+        //Vendedor aceitar a devolução
+        public static void DevolverPedidoVendedorAceite(Status Info)
+        {
+            Pedidos Alt = BuscarPedido(Info.CodPedido);
+            Alt.Status = "DEVOLVIDO_COM_SUCESSO";
+            AlterarPedido(Alt);
+
+            IncluirHistorico(Alt.Cod, Info.Obs);
         }
 
     }

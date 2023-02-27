@@ -120,6 +120,7 @@
     <Content Include="Views\Pedidos\ListaPedidos.cshtml" />
     <Content Include="Views\Pedidos\HistoricoPedido.cshtml" />
     <Content Include="Views\Pedidos\VendedorCancelarPedidoNaoEnviado.cshtml" />
+    <Content Include="Views\Pedidos\PedidosDevolvidos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
