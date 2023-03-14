@@ -32,19 +32,20 @@ namespace APIVENDAS.Dados
             }
         }
 
-        ////RETORNA Data Entrega
-        //public static HistPedido DataEntrega(int Codigo)
-        //{
-        //    using (var ctx = new VendasEntities())
-        //    {                
-        //        var Pesquisa = (from A in ctx.HistPedido where A.CodPed == Codigo select A).ToList();
-        //        var x = Pesquisa.Last();
-        //        var y = x.DataOcorrencia;
-        //        return Pesquisa;
-        //    }
-        //}
+        //RETORNA Data Entrega
+        public static Nullable<DateTime> DataEntrega(int Codigo)
+        {
+            using (var ctx = new VendasEntities())
+            {
+                // var Pesquisa = (from A in ctx.HistPedido where A.CodPed == Codigo select A).ToList();
+                var Pesquisa = ctx.HistPedido.ToList().Select(i => i.DataOcorrencia);
+                var x = Pesquisa.LastOrDefault();
+                //var y = x.DataOcorrencia;
+                return x;
+            }
+        }
 
-      
+        //var lstValorTotalFinanciadoDist = lstMapaDeVendasApiModel.Where(m => m.ChaveUnica == mapaDeVendasDist.ChaveUnica).Select(i => i.ValorTotalFinanciado).Distinct().ToList();
 
 
 

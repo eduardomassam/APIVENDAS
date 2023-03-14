@@ -33,11 +33,11 @@ namespace APIVENDAS.Controllers
         }
 
         ////RETORNA data de um pedido entregue
-        //[HttpGet, Route("DataEntrega/{id}")]
-        //public HistPedido DataEntrega(int id)
-        //{
-        //    return VendasCRUD.DataEntrega(id);
-        //}
+        [HttpGet, Route("DataEntrega/{id}")]
+        public Nullable<DateTime> DataEntrega(int id)
+        {
+            return VendasCRUD.DataEntrega(id);
+        }
 
 
 
