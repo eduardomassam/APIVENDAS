@@ -76,12 +76,11 @@
                
             </td>
             <td>
-                @if (item.Status == "ENTREGUE")
+                @if (item.Status == "ENTREGUE" && item.IsEnviar == true)
                 {
-                    @if (//chamar um metodo na controller que verifica se a data é menor que 7 dias)
-                    {
+                    //@ViewBag
                         @Html.ActionLink("Devolver Pedido", "DevolverPedido/" + item.Cod.ToString())
-                    }
+                    
                 }
 
 

@@ -112,6 +112,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AvaliacaoPedido.cs" />
+    <Compile Include="Models\HistPedido.cs" />
     <Compile Include="Models\Pedidos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -43,17 +43,42 @@ namespace client.Controllers
         public async Task <ActionResult> Listar()
         {
             string API = "api/vendas/ListarPedidoscpf/" + Session["CPF"].ToString();
-            var response = await client.GetAsync(API);
+            var response = await client.GetAsync(API);        
 
             if (response.IsSuccessStatusCode)
             {
                 var resultado = await response.Content.ReadAsStringAsync();
 
                 //List<Pedidos> <======== Json
-                var Lista = JsonConvert.DeserializeObject<Pedidos[]>(resultado).ToList();
+                var Lista = JsonConvert.DeserializeObject<List<Pedidos>>(resultado);
+
+                var lstEntregue = Lista.Where(l => l.Status == "ENTREGUE");
+
+                
+                    foreach (var item in lstEntregue)
+                    {
+                        List<HistPedido> histPedido = await HistoricoPedido(item.Cod.ToString());
+
+                        var pedidosHistentregues = histPedido.Where(t => t.Obs == "[TRANSPORTADORA] Pedido Entregue ao comprador").ToList();
+
+                        DateTime? dataEntrega = pedidosHistentregues.Select(t => t.DataOcorrencia).FirstOrDefault();
+
+
+                        if (dataEntrega.HasValue && dataEntrega.Value.AddDays(7) > DateTime.Now)
+                            item.IsEnviar = true;
+
+                        else
+                            item.IsEnviar = false;
+
+                    }
+               
+               
+
+                //Lista.DataOcorrencia = DateTime.Now;
 
                 return View(Lista);
             }
+    
             else return View();
         }
 
@@ -174,7 +199,24 @@ namespace client.Controllers
                 throw new Exception(response.ReasonPhrase);
         }
 
-   
+
+        public async Task<List<HistPedido>> HistoricoPedido(string id)
+        {
+            ViewData["Pedido"] = id;
+            var response = await client.GetAsync("api/vendas/BuscarHistorico/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+
+                var Lista = JsonConvert.DeserializeObject<List<HistPedido>>(resultado).ToList();
+
+               
+                return Lista;
+            }
+            else
+                return null;
+        }
 
 
 

@@ -45,7 +45,6 @@ namespace APIVENDAS.Dados
             }
         }
 
-        //var lstValorTotalFinanciadoDist = lstMapaDeVendasApiModel.Where(m => m.ChaveUnica == mapaDeVendasDist.ChaveUnica).Select(i => i.ValorTotalFinanciado).Distinct().ToList();
 
 
 
@@ -66,6 +65,10 @@ namespace APIVENDAS.Dados
             using (var ctx = new VendasEntities())
             {
                 var Pesquisa = (from A in ctx.Pedidos where A.CPF == Codigo select A).ToList();
+                //var Pesquisa = (from A in ctx.Pedidos 
+                //                join B in ctx.HistPedido
+                //                on A.Cod equals B.CodPed
+                //                where A.CPF == Codigo select A).ToList();
                 return Pesquisa;
             }
         }

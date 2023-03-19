@@ -13,5 +13,10 @@ namespace Cliente.Models
         public string Produto { get; set; }
         public Nullable<int> Quantidade { get; set; }
         public string Status { get; set; }
+
+        //propSistemica
+
+        public DateTime? DataOcorrencia { get; set; }
+        public bool IsEnviar { get; set; }
     }
 }
