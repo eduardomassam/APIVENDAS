@@ -12,13 +12,10 @@ namespace APIVENDAS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Pedidos
+    public partial class Usuario
     {
-        public int Cod { get; set; }
-        public string CPF { get; set; }
-        public string NomeCliente { get; set; }
-        public string Produto { get; set; }
-        public Nullable<int> Quantidade { get; set; }
-        public int Status { get; set; }
+        public string Usuario1 { get; set; }
+        public string Senha { get; set; }
+        public int Tipo { get; set; }
     }
 }

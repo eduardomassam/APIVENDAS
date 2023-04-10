@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-
+using Cliente.Enum;
 
 // Namespaces para conexão com API
 using System.Net.Http;
@@ -39,6 +38,7 @@ namespace client.Controllers
             }
         }
 
+
         //Metodo para listar os pedidos do client (Via API)
         public async Task <ActionResult> Listar()
         {
@@ -52,7 +52,7 @@ namespace client.Controllers
                 //List<Pedidos> <======== Json
                 var Lista = JsonConvert.DeserializeObject<List<Pedidos>>(resultado);
 
-                var lstEntregue = Lista.Where(l => l.Status == "ENTREGUE");
+                var lstEntregue = Lista.Where(l => l.Status == 2);
 
                 
                     foreach (var item in lstEntregue)
@@ -100,7 +100,7 @@ namespace client.Controllers
             }
 
             Novo.Cod = 0; //auto incremento
-            Novo.Status = "FEITO"; //1º status = NOVO
+            Novo.Status = 1; //1º status = NOVO
             Novo.CPF = Session["CPF"].ToString();
 
             string json = JsonConvert.SerializeObject(Novo);
@@ -218,6 +218,34 @@ namespace client.Controllers
                 return null;
         }
 
+
+        //CADASTRAR NOVO CLIENTE
+        [HttpGet]
+        public ActionResult NovoCliente(string id)
+        {
+            Session["CodPedido"] = id;
+
+            Usuario Novo = new Usuario();
+            Novo.Usuario1 = "";
+            Novo.Senha = "";
+            return View(Novo);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> NovoCliente(Usuario Novo)
+        {
+            
+            string json = JsonConvert.SerializeObject(Novo);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/NovoCliente", content);
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("../Home/Index");
+            else
+                throw new Exception(response.ReasonPhrase);
+        }
 
 
     }

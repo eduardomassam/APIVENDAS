@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\eduar\OneDrive\Área de Trabalho\Alura e Impacta\Acelera Pleno\PROJETAO FINAL DE AULA\APIVENDAS\APIVENDAS\Models\Modelo.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\_Projeto\ProjetoFinal\APIVENDAS\Novo\APIVENDAS\APIVENDAS\Models\Modelo.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

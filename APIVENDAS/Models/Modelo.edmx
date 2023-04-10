@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VendasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VendasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="HistPedido">
           <Key>
             <PropertyRef Name="CodPed" />
@@ -24,14 +24,30 @@
           <Property Name="NomeCliente" Type="varchar" MaxLength="50" />
           <Property Name="Produto" Type="varchar" MaxLength="50" />
           <Property Name="Quantidade" Type="int" />
-          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusPedido">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Usuario1" />
+          </Key>
+          <Property Name="Usuario1" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="VendasModelStoreContainer">
           <EntitySet Name="HistPedido" EntityType="Self.HistPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusPedido" EntityType="Self.StatusPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VendasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -54,12 +70,29 @@
           <Property Name="NomeCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Produto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Quantidade" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="VendasEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="HistPedido" EntityType="Self.HistPedido" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+          <EntitySet Name="StatusPedido" EntityType="VendasModel.StatusPedido" />
+          <EntitySet Name="Usuario" EntityType="VendasModel.Usuario" />
         </EntityContainer>
+        <EntityType Name="StatusPedido">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Usuario1" />
+          </Key>
+          <Property Name="Usuario1" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="Senha" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -85,6 +118,23 @@
                 <ScalarProperty Name="Produto" ColumnName="Produto" />
                 <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusPedido">
+            <EntityTypeMapping TypeName="VendasModel.StatusPedido">
+              <MappingFragment StoreEntitySet="StatusPedido">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="VendasModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

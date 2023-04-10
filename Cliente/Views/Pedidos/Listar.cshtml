@@ -65,18 +65,18 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @if (item.Status == "ENTREGUE")
+                @if (item.Status == 2)
                 {
                     @Html.ActionLink("Confirmar a Entrega", "ConfirmarPedidoEntregue/" + item.Cod.ToString())
                 }
-                @if (item.Status == "FEITO")
+                @if (item.Status == 1)
                 {
                     @Html.ActionLink("Cancelar Entrega", "CancelarPedidoNaoEnviado/" + item.Cod.ToString())
                 }
                
             </td>
             <td>
-                @if (item.Status == "ENTREGUE" && item.IsEnviar == true)
+                @if (item.Status == 1 && item.IsEnviar == true)
                 {
                     //@ViewBag
                         @Html.ActionLink("Devolver Pedido", "DevolverPedido/" + item.Cod.ToString())

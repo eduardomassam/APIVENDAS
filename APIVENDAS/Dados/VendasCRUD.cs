@@ -74,7 +74,7 @@ namespace APIVENDAS.Dados
         }
 
         //RETORNA todos os pedidos de um determinado STATUS
-        public static IEnumerable<Pedidos> ListarPedidosStatus(string status)
+        public static IEnumerable<Pedidos> ListarPedidosStatus(int status)
         {
             using (var ctx = new VendasEntities())
             {
@@ -88,12 +88,23 @@ namespace APIVENDAS.Dados
         {
             using (var ctx = new VendasEntities())
             {
-                var Pesquisa = (from A in ctx.Pedidos where A.Status == "FEITO" select A).Count().ToString();
+                var Pesquisa = (from A in ctx.Pedidos where A.Status == (int)Enum.StatusPedido.FEITO select A).Count().ToString();
                 return Pesquisa;
             }
         }
 
         //OPERAÇÕES
+
+        //CADASTRA NOVO CLIENTE
+
+        public static void NovoCliente(Usuario Novo)
+        {
+            using (var ctx=new VendasEntities())
+            {
+                ctx.Usuario.Add(Novo);
+                ctx.SaveChanges();
+            }
+        }
 
         //INCLUI um Novo Historico (Pedido 1=>N Historicos)
         public static void NovoHistorico (HistPedido Novo)
@@ -163,7 +174,7 @@ namespace APIVENDAS.Dados
         public static void AvaliarPedido(AvaliacaoPedido Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "AVALIADO";
+            Alt.Status = (int)Enum.StatusPedido.AVALIADO;
             AlterarPedido(Alt);
 
             Info.Avaliacao = "[CLIENTE] Avaliação: " + Info.Avaliacao;
@@ -175,7 +186,7 @@ namespace APIVENDAS.Dados
         public static void CancelarPedido(AvaliacaoPedido Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "CANCELADO";
+            Alt.Status = (int)Enum.StatusPedido.CANCELADO;
             AlterarPedido(Alt);
 
             Info.Avaliacao = "[CLIENTE] Motivo do Cancelamento: " + Info.Avaliacao;
@@ -187,7 +198,7 @@ namespace APIVENDAS.Dados
         public static void DevolverPedido(AvaliacaoPedido Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "DEVOLVIDO_CLIENTE";
+            Alt.Status = (int)Enum.StatusPedido.DEVOLVIDO_CLIENTE;
             AlterarPedido(Alt);
 
             Info.Avaliacao = "[CLIENTE] Motivo da Devolução: " + Info.Avaliacao;
@@ -199,7 +210,7 @@ namespace APIVENDAS.Dados
         public static void DevolverPedidoTransportadora(Status Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "DEVOLVIDO_TRANSPORTADORA";
+            Alt.Status = (int)Enum.StatusPedido.DEVOLVIDO_TRANSPORTADORA;
             AlterarPedido(Alt);
 
             IncluirHistorico(Alt.Cod, Info.Obs);
@@ -209,7 +220,7 @@ namespace APIVENDAS.Dados
         public static void DevolverPedidoVendedor(Status Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "DEVOLVIDO_VENDEDOR";
+            Alt.Status = (int)Enum.StatusPedido.DEVOLVIDO_VENDEDOR;
             AlterarPedido(Alt);
 
             IncluirHistorico(Alt.Cod, Info.Obs);
@@ -219,7 +230,7 @@ namespace APIVENDAS.Dados
         public static void DevolverPedidoVendedorAceite(Status Info)
         {
             Pedidos Alt = BuscarPedido(Info.CodPedido);
-            Alt.Status = "DEVOLVIDO_COM_SUCESSO";
+            Alt.Status = (int)Enum.StatusPedido.DEVOLVIDO_COM_SUCESSO;
             AlterarPedido(Alt);
 
             IncluirHistorico(Alt.Cod, Info.Obs);

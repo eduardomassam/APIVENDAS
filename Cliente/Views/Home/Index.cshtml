@@ -78,11 +78,22 @@
                                                         <br />
                                                         @Html.TextBox("CPF")
                                                         <br /><br />
+                                                        @Html.Label("Digite sua Senha: ")
+                                                        <br />
+                                                        @Html.TextBox("Senha")
+                                                        <br /><br />
+
+
                                                         <a href="#" class="text-uppercase custom_orange-btn mr-3"
                                                            onClick="document.getElementById('form').submit();">Confirmar</a>
 
                                                     </form>
+                                                    <br />
 
+                                                    <h2>
+                                                        @Html.ActionLink("Cadastre-se", "../Pedidos/NovoCliente")
+
+                                                    </h2>
                                                 </div>
                                             </div>
                                         </div>

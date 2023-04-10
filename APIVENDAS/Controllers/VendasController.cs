@@ -57,7 +57,7 @@ namespace APIVENDAS.Controllers
 
         //Retorna todos os pedidos de um certo status (Entregues, Cancelados...)
         [HttpGet,Route("ListarPedidosStatus/{id}")]
-        public IEnumerable<Pedidos> ListarPedidosStatus (string id)
+        public IEnumerable<Pedidos> ListarPedidosStatus (int id)
         {
             return VendasCRUD.ListarPedidosStatus(id);
         }
@@ -70,6 +70,22 @@ namespace APIVENDAS.Controllers
         }
 
         //OPERACOES
+
+        //CADASTRA UM NOVO CLIENTE
+        [HttpPost, Route("NovoCliente")]
+        public string IncluirCliente(Usuario Novo)
+        {
+            try
+            {
+                VendasCRUD.NovoCliente(Novo);
+                return "Ok";
+            }
+            catch (Exception err)
+            {
+                return err.Message;
+            }
+        }
+
         //INCLUI UM NOVO PEDIDO
 
         [HttpPost,Route("NovoPedido")]

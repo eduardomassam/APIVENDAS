@@ -27,5 +27,7 @@ namespace APIVENDAS.Models
     
         public virtual DbSet<HistPedido> HistPedido { get; set; }
         public virtual DbSet<Pedidos> Pedidos { get; set; }
+        public virtual DbSet<StatusPedido> StatusPedido { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }
