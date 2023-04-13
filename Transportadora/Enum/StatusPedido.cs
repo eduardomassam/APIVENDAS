@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cliente.Enum
+namespace Transportadora.Enum
 {
     public enum StatusPedido
     {
@@ -18,5 +18,6 @@ namespace Cliente.Enum
         ENVIADO = 9,
         DEVOLUCAO_ACEITA = 10,
         EM_TRANSPORTE = 11
+
     }
 }

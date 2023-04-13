@@ -4,8 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Vendedor.Models;
-
 //Namespaces para conexão com API
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,6 +13,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using System.Text;
+using Vendedor.Models;
 
 namespace Vendedor.Controllers
 {
@@ -45,7 +44,7 @@ namespace Vendedor.Controllers
 
         public async Task<ActionResult> NovosPedidos()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/FEITO");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/1");
             if (response.IsSuccessStatusCode)
             {
                 var resultado = await response.Content.ReadAsStringAsync();
@@ -74,7 +73,7 @@ namespace Vendedor.Controllers
         {
             Status Mudou = new Status();
             Mudou.CodPedido = Convert.ToInt32(id);
-            Mudou.NovoStatus = "ENVIADO";
+            Mudou.NovoStatus = (int)Enum.StatusPedido.ENVIADO;
             Mudou.Obs = "[VENDEDOR] Pedido disponível para transporte";
 
             string json = JsonConvert.SerializeObject(Mudou);
@@ -93,7 +92,7 @@ namespace Vendedor.Controllers
         {
             Status Mudou = new Status();
             Mudou.CodPedido = Convert.ToInt32(id);
-            Mudou.NovoStatus = "DEVOLUCAO_ACEITA";
+            Mudou.NovoStatus = (int)Enum.StatusPedido.DEVOLUCAO_ACEITA;
             Mudou.Obs = "[VENDEDOR] Pedido devolvido com sucesso";
 
             string json = JsonConvert.SerializeObject(Mudou);
@@ -174,7 +173,7 @@ namespace Vendedor.Controllers
 
         public async Task<ActionResult> PedidosDevolvidos()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_VENDEDOR");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/7");
 
             if (response.IsSuccessStatusCode)
             {

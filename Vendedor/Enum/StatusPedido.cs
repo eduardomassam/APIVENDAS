@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cliente.Enum
+namespace Vendedor.Enum
 {
     public enum StatusPedido
     {

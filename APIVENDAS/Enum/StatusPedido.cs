@@ -14,6 +14,9 @@ namespace APIVENDAS.Enum
         DEVOLVIDO_CLIENTE = 5,
         DEVOLVIDO_TRANSPORTADORA = 6,
         DEVOLVIDO_VENDEDOR = 7,
-        DEVOLVIDO_COM_SUCESSO = 8
+        DEVOLVIDO_COM_SUCESSO = 8,
+        ENVIADO = 9,
+        DEVOLUCAO_ACEITA = 10,
+        EM_TRANSPORTE = 11
     }
 }

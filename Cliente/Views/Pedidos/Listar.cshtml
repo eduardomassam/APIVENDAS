@@ -76,7 +76,7 @@
                
             </td>
             <td>
-                @if (item.Status == 1 && item.IsEnviar == true)
+                @if (item.Status == 2 && item.IsEnviar == true)
                 {
                     //@ViewBag
                         @Html.ActionLink("Devolver Pedido", "DevolverPedido/" + item.Cod.ToString())

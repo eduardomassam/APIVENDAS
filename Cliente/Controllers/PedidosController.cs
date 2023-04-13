@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Cliente.Enum;
 
 // Namespaces para conexão com API
 using System.Net.Http;

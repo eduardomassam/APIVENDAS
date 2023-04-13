@@ -8,7 +8,7 @@ namespace Vendedor.Models
     public class Status
     {
         public int CodPedido { get; set; }
-        public string NovoStatus { get; set; }
+        public int NovoStatus { get; set; }
         public string Obs { get; set; }
     }
 }

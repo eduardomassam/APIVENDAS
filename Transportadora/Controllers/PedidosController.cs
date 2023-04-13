@@ -45,7 +45,7 @@ namespace Transportadora.Controllers
             Status Mudou = new Status();
 
             Mudou.CodPedido = Convert.ToInt32(id);
-            Mudou.NovoStatus = "EM_TRANSPORTE";
+            Mudou.NovoStatus = (int)Enum.StatusPedido.EM_TRANSPORTE;
             Mudou.Obs = "[TRANSPORTADORA] Pedido a caminho da Entrega";
 
             string json = JsonConvert.SerializeObject(Mudou);
@@ -66,7 +66,7 @@ namespace Transportadora.Controllers
             Status Mudou = new Status();
 
             Mudou.CodPedido = Convert.ToInt32(id);
-            Mudou.NovoStatus = "ENTREGUE";
+            Mudou.NovoStatus = (int)Enum.StatusPedido.ENTREGUE;
             Mudou.Obs = "[TRANSPORTADORA] Pedido Entregue ao comprador";
 
             string json = JsonConvert.SerializeObject(Mudou);
@@ -100,7 +100,7 @@ namespace Transportadora.Controllers
             Status Mudou = new Status();
 
             Mudou.CodPedido = Convert.ToInt32(id);
-            Mudou.NovoStatus = "DEVOLVIDO_TRANSPORTADORA";
+            Mudou.NovoStatus = (int)Enum.StatusPedido.DEVOLVIDO_TRANSPORTADORA;
             Mudou.Obs = "[TRANSPORTADORA] Pedido Coletado com o cliente";
 
             string json = JsonConvert.SerializeObject(Mudou);
@@ -122,7 +122,7 @@ namespace Transportadora.Controllers
             Status Mudou = new Status();
 
             Mudou.CodPedido = Convert.ToInt32(id);
-            Mudou.NovoStatus = "DEVOLVIDO_VENDEDOR";
+            Mudou.NovoStatus = (int)Enum.StatusPedido.DEVOLVIDO_VENDEDOR;
             Mudou.Obs = "[TRANSPORTADORA] Pedido Devolvido ao Vendedor";
 
             string json = JsonConvert.SerializeObject(Mudou);
@@ -145,7 +145,7 @@ namespace Transportadora.Controllers
 
         public async Task<ActionResult> RetirarPedidos()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/ENVIADO");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/9");
 
             if (response.IsSuccessStatusCode)
             {
@@ -160,7 +160,7 @@ namespace Transportadora.Controllers
 
         public async Task<ActionResult> EntregarPedidos()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/EM_TRANSPORTE");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/11");
 
             if (response.IsSuccessStatusCode)
             {
@@ -173,7 +173,7 @@ namespace Transportadora.Controllers
 
         public async Task<ActionResult> PedidosEntregues()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/ENTREGUE");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/2");
 
             if (response.IsSuccessStatusCode)
             {
@@ -183,9 +183,11 @@ namespace Transportadora.Controllers
             }
             else return View();
         }
+
+        //PEDIDOS QUE O CLIENTE DEVOLVEU E ESTÁ AGUARDANDO A TRANSPORTADORA COLETAR PARA DEVOLVER AO VENDEDOR
         public async Task<ActionResult> ListaDevolvidosCliente()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_CLIENTE");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/5");
 
             if (response.IsSuccessStatusCode)
             {
@@ -198,7 +200,7 @@ namespace Transportadora.Controllers
 
         public async Task<ActionResult> ListaDevolvidosVendedor()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_CLIENTE");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/6");
 
             if (response.IsSuccessStatusCode)
             {
@@ -211,7 +213,7 @@ namespace Transportadora.Controllers
 
         public async Task<ActionResult> ListaDevolvidosEntregueVendedor()
         {
-            var response = await client.GetAsync("api/vendas/listarpedidosstatus/DEVOLVIDO_VENDEDOR");
+            var response = await client.GetAsync("api/vendas/listarpedidosstatus/7");
 
             if (response.IsSuccessStatusCode)
             {
