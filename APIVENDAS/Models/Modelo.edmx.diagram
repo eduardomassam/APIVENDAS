@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="VendasModel.Pedidos" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VendasModel.StatusPedido" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="VendasModel.Usuario" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="VendasModel.Transportadora" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="VendasModel.Vendedor" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

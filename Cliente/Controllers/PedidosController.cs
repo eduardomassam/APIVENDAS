@@ -225,7 +225,7 @@ namespace client.Controllers
             Session["CodPedido"] = id;
 
             Usuario Novo = new Usuario();
-            Novo.Usuario1 = "";
+            Novo.Cpf = "";
             Novo.Senha = "";
             return View(Novo);
         }

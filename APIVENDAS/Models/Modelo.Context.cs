@@ -29,5 +29,7 @@ namespace APIVENDAS.Models
         public virtual DbSet<Pedidos> Pedidos { get; set; }
         public virtual DbSet<StatusPedido> StatusPedido { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Transportadora> Transportadora { get; set; }
+        public virtual DbSet<Vendedor> Vendedor { get; set; }
     }
 }

@@ -1,0 +1,148 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
+-- --------------------------------------------------
+-- Date Created: 04/17/2023 19:46:25
+-- Generated from EDMX file: D:\_Projeto\ProjetoFinal\APIVENDAS\Novo\APIVENDAS\APIVENDAS\Models\Modelo.edmx
+-- --------------------------------------------------
+
+SET QUOTED_IDENTIFIER OFF;
+GO
+USE [Vendas];
+GO
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[HistPedido]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HistPedido];
+GO
+IF OBJECT_ID(N'[dbo].[Pedidos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Pedidos];
+GO
+IF OBJECT_ID(N'[dbo].[StatusPedido]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StatusPedido];
+GO
+IF OBJECT_ID(N'[dbo].[Transportadora]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Transportadora];
+GO
+IF OBJECT_ID(N'[dbo].[Usuario]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Usuario];
+GO
+IF OBJECT_ID(N'[dbo].[Vendedor]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Vendedor];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'HistPedido'
+CREATE TABLE [dbo].[HistPedido] (
+    [CodPed] int  NOT NULL,
+    [NroSeq] int IDENTITY(1,1) NOT NULL,
+    [DataOcorrencia] datetime  NULL,
+    [Obs] varchar(300)  NULL
+);
+GO
+
+-- Creating table 'Pedidos'
+CREATE TABLE [dbo].[Pedidos] (
+    [Cod] int IDENTITY(1,1) NOT NULL,
+    [CPF] char(11)  NULL,
+    [NomeCliente] varchar(50)  NULL,
+    [Produto] varchar(50)  NULL,
+    [Quantidade] int  NULL,
+    [Status] int  NOT NULL
+);
+GO
+
+-- Creating table 'StatusPedido'
+CREATE TABLE [dbo].[StatusPedido] (
+    [Codigo] int  NOT NULL,
+    [Descricao] varchar(40)  NULL
+);
+GO
+
+-- Creating table 'Usuario'
+CREATE TABLE [dbo].[Usuario] (
+    [Senha] varchar(30)  NOT NULL,
+    [Tipo] int  NOT NULL,
+    [Id] int  NOT NULL,
+    [Cpf] varchar(14)  NOT NULL
+);
+GO
+
+-- Creating table 'Transportadora'
+CREATE TABLE [dbo].[Transportadora] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Cnpj] varchar(14)  NOT NULL,
+    [Senha] varchar(30)  NOT NULL,
+    [Tipo] int  NOT NULL
+);
+GO
+
+-- Creating table 'Vendedor'
+CREATE TABLE [dbo].[Vendedor] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Cnpj] varchar(14)  NOT NULL,
+    [Senha] varchar(30)  NOT NULL,
+    [Tipo] int  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [CodPed], [NroSeq] in table 'HistPedido'
+ALTER TABLE [dbo].[HistPedido]
+ADD CONSTRAINT [PK_HistPedido]
+    PRIMARY KEY CLUSTERED ([CodPed], [NroSeq] ASC);
+GO
+
+-- Creating primary key on [Cod] in table 'Pedidos'
+ALTER TABLE [dbo].[Pedidos]
+ADD CONSTRAINT [PK_Pedidos]
+    PRIMARY KEY CLUSTERED ([Cod] ASC);
+GO
+
+-- Creating primary key on [Codigo] in table 'StatusPedido'
+ALTER TABLE [dbo].[StatusPedido]
+ADD CONSTRAINT [PK_StatusPedido]
+    PRIMARY KEY CLUSTERED ([Codigo] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Usuario'
+ALTER TABLE [dbo].[Usuario]
+ADD CONSTRAINT [PK_Usuario]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Transportadora'
+ALTER TABLE [dbo].[Transportadora]
+ADD CONSTRAINT [PK_Transportadora]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Vendedor'
+ALTER TABLE [dbo].[Vendedor]
+ADD CONSTRAINT [PK_Vendedor]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------
