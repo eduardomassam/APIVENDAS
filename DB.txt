@@ -139,6 +139,11 @@ ADD CONSTRAINT [PK_Vendedor]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Criando o index de Cpf
+CREATE UNIQUE INDEX index_Cpf
+ ON Usuario (Cpf);
+
+GO
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------

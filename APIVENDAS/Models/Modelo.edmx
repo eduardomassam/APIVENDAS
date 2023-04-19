@@ -47,8 +47,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Cpf" Type="varchar" MaxLength="14" Nullable="false" />
-          <Property Name="Senha" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Cpf" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Senha" Type="char" MaxLength="32" Nullable="false" />
           <Property Name="Tipo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Vendedor">
@@ -112,10 +112,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Senha" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Senha" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="false" />
           <Property Name="Tipo" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Cpf" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="Cpf" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Transportadora">
           <Key>

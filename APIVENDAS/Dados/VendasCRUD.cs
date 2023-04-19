@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using APIVENDAS.Utils;
 using APIVENDAS.Models;
 using System.Data.Entity;
 
@@ -101,6 +102,8 @@ namespace APIVENDAS.Dados
         {
             using (var ctx=new VendasEntities())
             {
+                Criptografia cript = new Criptografia();
+                Novo.Senha = cript.RetornarMD5(Novo.Senha);
                 ctx.Usuario.Add(Novo);
                 ctx.SaveChanges();
             }
