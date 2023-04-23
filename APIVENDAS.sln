@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32510.428
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIVENDAS", "APIVENDAS\APIVENDAS.csproj", "{9C4D95CB-C40D-4592-9CEA-BF8F7370E74D}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportadora", "Transportadora\Transportadora.csproj", "{C74005E8-9AEF-4DDB-ADDC-4081277B062E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vendedor", "Vendedor\Vendedor.csproj", "{37E0782D-8DBE-468A-9526-BDAE9B3BE17E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIVENDASCORE", "APIVENDASCORE\APIVENDASCORE.csproj", "{815B558C-E34C-4046-80B1-9E77DD31D94E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{37E0782D-8DBE-468A-9526-BDAE9B3BE17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37E0782D-8DBE-468A-9526-BDAE9B3BE17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37E0782D-8DBE-468A-9526-BDAE9B3BE17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{815B558C-E34C-4046-80B1-9E77DD31D94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815B558C-E34C-4046-80B1-9E77DD31D94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815B558C-E34C-4046-80B1-9E77DD31D94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815B558C-E34C-4046-80B1-9E77DD31D94E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

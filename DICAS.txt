@@ -5,7 +5,7 @@ var lstValorTotalFinanciadoDist = lstMapaDeVendasApiModel.Where(m => m.ChaveUnic
 SE ERRO could-not-find-a-part-of-the-path-bin-roslyn-csc-exe:
 Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
 
- 
+Gravação 09/02 é o inicio do projeto da API
  
 -- Mobile Transportadora
 -- Angular Cliente

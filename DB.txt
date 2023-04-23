@@ -74,10 +74,10 @@ GO
 
 -- Creating table 'Usuario'
 CREATE TABLE [dbo].[Usuario] (
-    [Senha] varchar(30)  NOT NULL,
+    [Senha] varchar(32)  NOT NULL,
     [Tipo] int  NOT NULL,
     [Id] int  NOT NULL,
-    [Cpf] varchar(14)  NOT NULL
+    [Cpf] varchar(11)  NOT NULL
 );
 GO
 
@@ -85,7 +85,7 @@ GO
 CREATE TABLE [dbo].[Transportadora] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Cnpj] varchar(14)  NOT NULL,
-    [Senha] varchar(30)  NOT NULL,
+    [Senha] varchar(32)  NOT NULL,
     [Tipo] int  NOT NULL
 );
 GO
@@ -94,7 +94,7 @@ GO
 CREATE TABLE [dbo].[Vendedor] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Cnpj] varchar(14)  NOT NULL,
-    [Senha] varchar(30)  NOT NULL,
+    [Senha] varchar(32)  NOT NULL,
     [Tipo] int  NOT NULL
 );
 GO
