@@ -32,7 +32,7 @@ namespace client.Controllers
             {
                 client = new HttpClient();
                 //porta da APIVENDAS abaixo
-                client.BaseAddress = new Uri("https://localhost:44395/");
+                client.BaseAddress = new Uri("https://localhost:7259/");
                 client.DefaultRequestHeaders.Accept.Add(new
                     MediaTypeWithQualityHeaderValue("application/json"));
             }

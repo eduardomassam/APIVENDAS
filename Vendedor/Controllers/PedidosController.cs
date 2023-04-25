@@ -31,7 +31,7 @@ namespace Vendedor.Controllers
             if (client == null)
             {
                 client = new HttpClient();
-                client.BaseAddress = new Uri("https://localhost:44364/");
+                client.BaseAddress = new Uri("https://localhost:7259/");
                 client.DefaultRequestHeaders.Accept.Add(new
                     MediaTypeWithQualityHeaderValue("application/json"));
             }

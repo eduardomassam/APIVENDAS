@@ -1,14 +1,21 @@
 PEGAR CAMPO NO LINQ:
 var lstValorTotalFinanciadoDist = lstMapaDeVendasApiModel.Where(m => m.ChaveUnica == mapaDeVendasDist.ChaveUnica).Select(i => i.ValorTotalFinanciado).Distinct().ToList();
 
-
+=======================================================================================================================================
 SE ERRO could-not-find-a-part-of-the-path-bin-roslyn-csc-exe:
 Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
 
+=======================================================================================================================================
 Gravação 09/02 é o inicio do projeto da API
  
+=======================================================================================================================================
 -- Mobile Transportadora
 -- Angular Cliente
 -- API REST Net Framework
 -- MVC Vendedor
 -- Banco SQL (colocar em docker se der tempo)
+
+=======================================================================================================================================
+Usuário e senha da string de conexão é:
+user: sa
+senha: sa

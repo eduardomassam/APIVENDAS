@@ -46,11 +46,6 @@ namespace APIVENDAS.Dados
             }
         }
 
-
-
-
-
-
         //RETORNA todos os pedidos
         public static IEnumerable<Pedidos> ListarPedidos()
         {
