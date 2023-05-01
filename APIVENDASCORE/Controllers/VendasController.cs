@@ -200,6 +200,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna um pedido a partir do Codigo
         [HttpGet("BuscarPedido/{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Busca um pedido especifico")]
         public Pedidos BuscarPedido(int id)
         {
@@ -208,6 +209,7 @@ namespace APIVENDASCORE.Controllers
 
         //RETORNA Lista de Historicos de um Pedido
         [HttpGet("BuscarHistorico/{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Busca o historico de um pedido especifico")]
         public IEnumerable<HistPedido> BuscarHistorico(int id)
         {
@@ -216,6 +218,7 @@ namespace APIVENDASCORE.Controllers
 
         ////RETORNA data de um pedido entregue
         [HttpGet("DataEntrega/{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Busca a data da entrega de um pedido")]
         public Nullable<DateTime> DataEntrega(int id)
         {
@@ -226,6 +229,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna todos os pedidos
         [HttpGet, Route("ListarPedidos")]
+        [Authorize]
         public IEnumerable<Pedidos> ListarPedidos()
         {
             return VendasCRUD.ListarPedidos();
@@ -242,6 +246,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna todos os pedidos de um certo status (Entregues, Cancelados...)
         [HttpGet, Route("ListarPedidosStatus/{id}")]
+        [Authorize]
         public IEnumerable<Pedidos> ListarPedidosStatus(int id)
         {
             return VendasCRUD.ListarPedidosStatus(id);
@@ -249,6 +254,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna o total de pedidos
         [HttpGet, Route("TotalPedidosFeitos")]
+        [Authorize]
         public string TotalPedidos()
         {
             return VendasCRUD.TotalPedidosFeitos();
@@ -259,6 +265,7 @@ namespace APIVENDASCORE.Controllers
         //INCLUI UM NOVO PEDIDO
 
         [HttpPost, Route("NovoPedido")]
+        [Authorize]
         public string IncluirPedido(Pedidos Novo)
         {
             try
@@ -274,6 +281,7 @@ namespace APIVENDASCORE.Controllers
 
         //Altera o status de um pedido
         [HttpPost, Route("MudarStatusPedido")]
+        [Authorize]
         public string MudarStatus(Status Mudou)
         {
             try
@@ -289,6 +297,7 @@ namespace APIVENDASCORE.Controllers
 
         //Faz a avaliação de um pedido por um cliente
         [HttpPost, Route("AvaliarPedido")]
+        [Authorize]
         public string PedidoAvaliado(AvaliacaoPedidos Info)
         {
             try
@@ -304,6 +313,7 @@ namespace APIVENDASCORE.Controllers
 
         //Faz o cancelamento do Pedido pelo cliente
         [HttpPost, Route("CancelarPedido")]
+        [Authorize]
         public string PedidoCancelado(AvaliacaoPedidos Info)
         {
             try
@@ -319,6 +329,7 @@ namespace APIVENDASCORE.Controllers
 
         //Devolver pedido durante 7 dias da chegada
         [HttpPost, Route("DevolverPedido")]
+        [Authorize]
         public string PedidoDevolvido(AvaliacaoPedidos Info)
         {
             try
@@ -334,6 +345,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoTransportadora")]
+        [Authorize]
         public string DevolverPedidoTransportadora(Status Info)
         {
             try
@@ -348,6 +360,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoVendedor")]
+        [Authorize]
         public string DevolverPedidoVendedor(Status Info)
         {
             try
@@ -362,6 +375,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoVendedorAceite")]
+        [Authorize]
         public string DevolverPedidoVendedorAceite(Status Info)
         {
             try
