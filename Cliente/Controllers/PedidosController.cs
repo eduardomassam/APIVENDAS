@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Specialized;
+using Cliente;
 
 namespace client.Controllers
 {
@@ -40,19 +41,7 @@ namespace client.Controllers
                     MediaTypeWithQualityHeaderValue("application/json"));
             }
         }
-        //private readonly IHttpContextAccessor _httpContextAccessor;
-        //private readonly HttpClient _client;
-
-
-        //public PedidosController(IHttpContextAccessor httpContextAccessor, HttpClient client)
-        //{
-        //    _httpContextAccessor = httpContextAccessor;
-        //    _client = client;
-        //    _client.BaseAddress = new Uri("https://localhost:7259/");
-        //    client.DefaultRequestHeaders.Accept.Add(new
-        //           MediaTypeWithQualityHeaderValue("application/json"));
-        //}
-        //public PedidosController() { }
+     
 
         // Metodo para listar os pedidos do client (Via API)
         public async Task<ActionResult> Listar(string cpf)
@@ -262,6 +251,18 @@ namespace client.Controllers
         [HttpPost]
         public async Task<ActionResult> NovoCliente(Usuario Novo)
         {
+            var validator = new UsuarioValidator();
+            var validationResult = validator.Validate(Novo);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(Novo);
+            }
 
             string json = JsonConvert.SerializeObject(Novo);
 
@@ -270,9 +271,17 @@ namespace client.Controllers
             var response = await client.PostAsync("api/vendas/NovoCliente", content);
 
             if (response.IsSuccessStatusCode)
-                return RedirectToAction("../Home/Index");
+            {
+                ViewBag.MensagemSucesso = "Cliente cadastrado com sucesso!";
+                //return RedirectToAction("../Home/Index");
+                return View("NovoCliente",Novo);
+            }
             else
-                throw new Exception(response.ReasonPhrase);
+            {
+                ViewBag.MensagemErro = "Erro ao cadastrar cliente";
+                return View("NovoCliente", Novo);
+                //throw new Exception(response.ReasonPhrase);
+            }
         }
 
 
