@@ -15,6 +15,9 @@ using Newtonsoft.Json;
 using System.Text;
 using Cliente.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Specialized;
 
 namespace client.Controllers
 {
@@ -23,12 +26,12 @@ namespace client.Controllers
         //Objeto de acesso a API
         HttpClient client;
 
-        // constructor para conexão com a API
+        //constructor para conexão com a API
         public PedidosController()
         {
             // endereço da API e o tipo da resposta dela
 
-            if(client==null)
+            if (client == null)
             {
                 client = new HttpClient();
                 //porta da APIVENDAS abaixo
@@ -37,24 +40,51 @@ namespace client.Controllers
                     MediaTypeWithQualityHeaderValue("application/json"));
             }
         }
+        //private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly HttpClient _client;
 
 
-        //Metodo para listar os pedidos do client (Via API)
-        public async Task <ActionResult> Listar()
+        //public PedidosController(IHttpContextAccessor httpContextAccessor, HttpClient client)
+        //{
+        //    _httpContextAccessor = httpContextAccessor;
+        //    _client = client;
+        //    _client.BaseAddress = new Uri("https://localhost:7259/");
+        //    client.DefaultRequestHeaders.Accept.Add(new
+        //           MediaTypeWithQualityHeaderValue("application/json"));
+        //}
+        //public PedidosController() { }
+
+        // Metodo para listar os pedidos do client (Via API)
+        public async Task<ActionResult> Listar(string cpf)
         {
-            string API = "api/vendas/ListarPedidoscpf/" + Session["CPF"].ToString();
-            var response = await client.GetAsync(API);        
-
-            if (response.IsSuccessStatusCode)
+            if (cpf == null)
             {
-                var resultado = await response.Content.ReadAsStringAsync();
+                return RedirectToAction("../Home/Index");
+            }
 
-                //List<Pedidos> <======== Json
-                var Lista = JsonConvert.DeserializeObject<List<Pedidos>>(resultado);
+            // Obtém o token armazenado no cookie
+            var token = Request.Cookies["token"].Value;
 
-                var lstEntregue = Lista.Where(l => l.Status == 2);
+            string API = "api/vendas/ListarPedidosCPF/" + cpf;
 
-                
+            using (var httpClient = new HttpClient())
+            {
+
+                httpClient.BaseAddress = new Uri("https://localhost:7259/");
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                HttpResponseMessage response = await httpClient.GetAsync("api/vendas/ListarPedidosCPF/" + cpf);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resultado = await response.Content.ReadAsStringAsync();
+
+                    //List<Pedidos> <======== Json
+                    var lista = JsonConvert.DeserializeObject<List<Pedidos>>(resultado);
+
+                    var lstEntregue = lista.Where(l => l.Status == 2);
+
                     foreach (var item in lstEntregue)
                     {
                         List<HistPedido> histPedido = await HistoricoPedido(item.Cod.ToString());
@@ -63,30 +93,28 @@ namespace client.Controllers
 
                         DateTime? dataEntrega = pedidosHistentregues.Select(t => t.DataOcorrencia).FirstOrDefault();
 
-
                         if (dataEntrega.HasValue && dataEntrega.Value.AddDays(7) > DateTime.Now)
                             item.IsEnviar = true;
 
                         else
                             item.IsEnviar = false;
-
                     }
-               
-               
 
-                //Lista.DataOcorrencia = DateTime.Now;
-
-                return View(Lista);
+                    return View(lista);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Acesso não autorizado.");
+                    return RedirectToAction("../Home/Index");
+                }
             }
-    
-            else return View();
         }
-
-      [HttpGet]
-      public ActionResult NovoPedido()
+        [HttpGet]
+        public ActionResult NovoPedido(string cpf)
         {
             Pedidos Novo = new Pedidos();
-            Novo.CPF = Session["CPF"].ToString();
+            //Novo.CPF = Session["CPF"].ToString();
+            Novo.CPF = cpf;
 
             return View(Novo);
         }
@@ -211,7 +239,7 @@ namespace client.Controllers
 
                 var Lista = JsonConvert.DeserializeObject<List<HistPedido>>(resultado).ToList();
 
-               
+
                 return Lista;
             }
             else
@@ -234,7 +262,7 @@ namespace client.Controllers
         [HttpPost]
         public async Task<ActionResult> NovoCliente(Usuario Novo)
         {
-            
+
             string json = JsonConvert.SerializeObject(Novo);
 
             HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");

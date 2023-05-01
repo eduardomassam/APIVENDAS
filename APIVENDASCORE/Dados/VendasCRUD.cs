@@ -1,4 +1,5 @@
 ﻿using APIVENDASCORE.Models;
+using APIVENDASCORE.Services;
 using APIVENDASCORE.Utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,44 @@ namespace APIVENDASCORE.Dados
                 ctx.SaveChanges();
             }
         }
+
+        //public static Usuario Logar(Usuario Login)
+        //{
+        //    using (var ctx = new Contexto())
+        //    {
+        //        Criptografia cript = new Criptografia();
+        //        var Cpf = Login.Cpf;
+
+        //        string senhaCriptografada = ctx.Usuario
+        //        .Where(u => u.Cpf == Cpf)
+        //        .Select(u => u.Senha)
+        //        .FirstOrDefault();
+
+        //        if (senhaCriptografada==null)
+        //        {
+        //            //return false;
+        //        }
+
+        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+        //        if(Autenticado) 
+        //        {
+        //            var token = TokenServices.GenerateToken(Login);
+        //            Login.Senha = "";
+
+        //            var result = new
+        //            {
+        //                user = Login,
+        //                token = token
+        //            };
+
+        //            return Login;
+        //        }
+                
+        //        return Login;
+
+              
+        //    }
+        //}
 
         //PESQUISAS
 

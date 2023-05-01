@@ -13,6 +13,14 @@ namespace Cliente
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Adiciona a rota para listar pedidos por CPF
+            routes.MapRoute(
+                name: "ListarPedidosCPF",
+                url: "Pedidos/Listar/{cpf}",
+                defaults: new { controller = "Pedidos", action = "Listar", cpf = UrlParameter.Optional }
+            );
+
+            // Rota padrão
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

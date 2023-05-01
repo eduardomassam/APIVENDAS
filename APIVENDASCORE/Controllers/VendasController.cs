@@ -1,7 +1,17 @@
 ﻿using APIVENDASCORE.Dados;
 using APIVENDASCORE.Models;
+using APIVENDASCORE.Repositorys.APIVENDASCORE.Repositories;
+using APIVENDASCORE.Services;
+using APIVENDASCORE.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.Owin;
+using System.Web;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIVENDASCORE.Controllers
 {
@@ -9,7 +19,166 @@ namespace APIVENDASCORE.Controllers
     [Route("api/vendas/")]
     [Produces("application/json")]
     public class VendasController : ControllerBase
-    {   
+    {
+        // LOGIN CPF
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] Usuario Login)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cpf = Login.Cpf;
+
+                string senhaCriptografada = ctx.Usuario
+                    .Where(u => u.Cpf == Cpf)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    return BadRequest("Usuário ou senha inválidos");
+                }
+
+                var user = ctx.Usuario
+                    .Where(u => u.Cpf == Cpf)
+                    .Select(u => u.Tipo)
+                    .FirstOrDefault();
+
+                var roles = new List<string>();
+                if (user == 0)
+                {
+                    roles.Add("Autenticado");
+                }
+                else if (user == 1)
+                {
+                    roles.Add("Administrador");
+                    roles.Add("Default");
+                }
+
+                var token = TokenServices.GenerateToken(Login, roles.ToArray());
+                Login.Senha = "";
+
+                var result = new
+                {
+                    user = Login,
+                    token = token,
+                    role = roles
+                };
+
+                return result;
+            }
+        }
+
+        // LOGIN VENDEDOR
+
+        [HttpPost]
+        [Route("LoginVendedor")]
+        public async Task<ActionResult<dynamic>> AuthenticateVendedor([FromBody] Vendedor Login)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cnpj = Login.Cnpj;
+
+                string senhaCriptografada = ctx.Vendedor
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    return BadRequest("Usuário ou senha inválidos");
+                }
+
+                var user = ctx.Vendedor
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Tipo)
+                    .FirstOrDefault();
+
+                var roles = new List<string>();
+                if (user == 0)
+                {
+                    roles.Add("Autenticado");
+                }
+                else if (user == 1)
+                {
+                    roles.Add("Administrador");
+                    roles.Add("Default");
+                }
+
+                var token = TokenServices.GenerateTokenVendedor(Login, roles.ToArray());
+                Login.Senha = "";
+
+                var result = new
+                {
+                    user = Login,
+                    token = token,
+                    role = roles
+                };
+
+                return result;
+            }
+        }
+
+        // LOGIN TRANSPORTADORA
+
+        [HttpPost]
+        [Route("LoginTransportadora")]
+        public async Task<ActionResult<dynamic>> AuthenticateTransportadora([FromBody] Transportadora Login)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cnpj = Login.Cnpj;
+
+                string senhaCriptografada = ctx.Transportadora
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    return BadRequest("Usuário ou senha inválidos");
+                }
+
+                var user = ctx.Transportadora
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Tipo)
+                    .FirstOrDefault();
+
+                var roles = new List<string>();
+                if (user == 0)
+                {
+                    roles.Add("Autenticado");
+                }
+                else if (user == 1)
+                {
+                    roles.Add("Administrador");
+                    roles.Add("Default");
+                }
+
+                var token = TokenServices.GenerateTokenTransportadora(Login, roles.ToArray());
+                Login.Senha = "";
+
+                var result = new
+                {
+                    user = Login,
+                    token = token,
+                    role = roles
+                };
+
+                return result;
+            }
+        }
+
         //CADASTRA UM NOVO CLIENTE
 
         [HttpPost("NovoCliente")]
@@ -63,7 +232,9 @@ namespace APIVENDASCORE.Controllers
         }
 
         //Retorna todos os pedidos de um cliente especifico (busca por CPF)
+
         [HttpGet, Route("ListarPedidosCPF/{id}")]
+        [Authorize]
         public IEnumerable<Pedidos> ListarPedidosCPF(string id)
         {
             return VendasCRUD.ListarPedidosCPF(id);

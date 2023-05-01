@@ -1,57 +1,65 @@
 ﻿@model IEnumerable<Cliente.Models.Pedidos>
 
-    
+
 
 @{
     ViewBag.Title = "Listar";
 }
 
-<h2>Meus Pedidos - @Session["CPF"].ToString()</h2>
+@if (Session["CPF"] != null)
+{
+    <h2>Meus Pedidos - @Session["CPF"].ToString()</h2>
+}
+else
+{
+    <h2>Meus Pedidos</h2>
+}
 <p>
-    @Html.ActionLink("Fazer um pedido","NovoPedido")
+    @Html.ActionLink("Fazer um pedido", "NovoPedido")
 </p>
 
 @*<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Listar</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
-    <table width="700" border="1">
-        <tr>
-            <th width="50">
-                <b>Código</b>           
-            </th>  
-            <th>
-               <b>Nome do Cliente</b>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Produto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            
-            <th width="100">
-                &nbsp;
-            </th>
-            
-            
-        </tr>
-    
-    @foreach (var item in Model) {
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Listar</title>
+    </head>
+    <body>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+<table width="700" border="1">
+    <tr>
+        <th width="50">
+            <b>Código</b>
+        </th>
+        <th>
+            <b>Nome do Cliente</b>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Produto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+
+        <th width="100">
+            &nbsp;
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Cod)
-            </td>   
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeCliente)
             </td>
@@ -73,21 +81,21 @@
                 {
                     @Html.ActionLink("Cancelar Entrega", "CancelarPedidoNaoEnviado/" + item.Cod.ToString())
                 }
-               
+
             </td>
             <td>
                 @if (item.Status == 2 && item.IsEnviar == true)
                 {
                     //@ViewBag
-                        @Html.ActionLink("Devolver Pedido", "DevolverPedido/" + item.Cod.ToString())
-                    
+                    @Html.ActionLink("Devolver Pedido", "DevolverPedido/" + item.Cod.ToString())
+
                 }
 
 
             </td>
         </tr>
     }
-    
-    </table>
+
+</table>
 @*</body>
-</html>*@
+    </html>*@
