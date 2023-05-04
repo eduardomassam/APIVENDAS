@@ -1,0 +1,142 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<TESTE.Models.Pedidos>
+
+
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<html>
+<head>
+
+
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+
+        tbody {
+            background-color: cornsilk;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    @if (ViewBag.CPF != null)
+    {
+        <h2 align="center">Meus Pedidos - @ViewBag.CPF</h2>
+    }
+    else
+    {
+        <h2>Meus Pedidos</h2>
+    }
+    <br />
+    <br />
+    <div class="text-center">
+        @Html.ActionLink("Fazer um pedido", "NovoPedido", new { cpf = ViewBag.CPF }, new { @class = "btn btn-primary btn-lg" })
+    </div>
+    <br />
+    <br />
+
+
+    <table id="myTable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    <b>Código</b>
+                </th>
+
+                <th>
+                    <b>Nome do Cliente</b>
+                </th>
+
+                <th>
+                    <b>Produto</b>
+                </th>
+
+                <th>
+                    <b>Quantidade</b>
+                </th>
+
+                <th>
+                    <b>Status</b>
+                </th>
+
+                <th>
+                    <b>Cancelar/Confirmar Entrega</b>
+                </th>
+
+                <th>
+                    <b>Devolver Pedido</b>
+                </th>
+
+
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeCliente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Produto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+
+                        @if (item.Status == 2)
+                        {
+                            <button type="button" class="btn btn-success">@Html.ActionLink("Confirmar a Entrega", "ConfirmarPedidoEntregue", new { id = item.Cod }, new { @class = "text-white" })</button>
+                        }
+
+                        @if (item.Status == 1)
+                        {
+                            <button type="button" class="btn btn-danger">@Html.ActionLink("Cancelar Entrega", "CancelarPedidoNaoEnviado", new { id = item.Cod }, new { @class = "text-white" })</button>
+                        }
+
+
+                    </td>
+                    <td>
+                        @if (item.Status == 2 && item.IsEnviar == true)
+                        {
+                            <button class="btn btn-warning" type="button" onclick="location.href='@Url.Action("DevolverPedido", new { id = item.Cod })'">Devolver Pedido</button>
+                        }
+
+
+                    </td>
+                </tr>
+
+            </tbody>
+        }
+
+    </table>
+</body>
+</html>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+            });
+        });
+    </script>
+}
