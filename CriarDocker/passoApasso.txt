@@ -1,0 +1,9 @@
+Criar o Docker:
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Docker158*@!' -p 22:1433 --name SQLSERVERDOCKER -d mcr.microsoft.com/mssql/server:2019-latest
+
+Conectar nele para ver se está funcionando:
+docker exec -it SQLSERVERDOCKER /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Docker158*@!'
+
+Usar o SSMS e conectar com localhost,22 + usuario + senha;
+
+Executar o arquivo de script (arquivo está na mesma pasta que esse).
