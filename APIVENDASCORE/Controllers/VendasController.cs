@@ -22,162 +22,203 @@ namespace APIVENDASCORE.Controllers
     {
         // LOGIN CPF
 
-        [HttpPost]
-        [Route("Login")]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] Usuario Login)
+
+        //[HttpPost]
+        //[Route("Login")]
+        //public async Task<ActionResult<dynamic>> Authenticate([FromBody] Usuario Login)
+        //{
+        //    using (var ctx = new Contexto())
+        //    {
+        //        Criptografia cript = new Criptografia();
+        //        var Cpf = Login.Cpf;
+
+        //        string senhaCriptografada = ctx.Usuario
+        //            .Where(u => u.Cpf == Cpf)
+        //            .Select(u => u.Senha)
+        //            .FirstOrDefault();
+
+        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+        //        if (senhaCriptografada == null || Autenticado == false)
+        //        {
+        //            return BadRequest("Usuário ou senha inválidos");
+        //        }
+
+        //        var user = ctx.Usuario
+        //            .Where(u => u.Cpf == Cpf)
+        //            .Select(u => u.Tipo)
+        //            .FirstOrDefault();
+
+        //        var roles = new List<string>();
+        //        if (user == 0)
+        //        {
+        //            roles.Add("Autenticado");
+        //        }
+        //        else if (user == 1)
+        //        {
+        //            roles.Add("Administrador");
+        //            roles.Add("Default");
+        //        }
+
+        //        var token = TokenServices.GenerateToken(Login, roles.ToArray());
+        //        Login.Senha = "";
+
+        //        var result = new
+        //        {
+        //            user = Login,
+        //            token = token,
+        //            role = roles
+        //        };
+
+        //        return result;
+        //    }
+        //}
+
+
+        [HttpPost, Route("Login")]
+        public LoginResult Logar(Usuario Novo)
         {
-            using (var ctx = new Contexto())
+            try
             {
-                Criptografia cript = new Criptografia();
-                var Cpf = Login.Cpf;
-
-                string senhaCriptografada = ctx.Usuario
-                    .Where(u => u.Cpf == Cpf)
-                    .Select(u => u.Senha)
-                    .FirstOrDefault();
-
-                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
-
-                if (senhaCriptografada == null || Autenticado == false)
-                {
-                    return BadRequest("Usuário ou senha inválidos");
-                }
-
-                var user = ctx.Usuario
-                    .Where(u => u.Cpf == Cpf)
-                    .Select(u => u.Tipo)
-                    .FirstOrDefault();
-
-                var roles = new List<string>();
-                if (user == 0)
-                {
-                    roles.Add("Autenticado");
-                }
-                else if (user == 1)
-                {
-                    roles.Add("Administrador");
-                    roles.Add("Default");
-                }
-
-                var token = TokenServices.GenerateToken(Login, roles.ToArray());
-                Login.Senha = "";
-
-                var result = new
-                {
-                    user = Login,
-                    token = token,
-                    role = roles
-                };
-
+                var result = VendasCRUD.Login(Novo);
                 return result;
+            }
+            catch (Exception err)
+            {
+                throw new ArgumentException("Usuário ou senha inválidos");
             }
         }
 
-        // LOGIN VENDEDOR
-
-        [HttpPost]
-        [Route("LoginVendedor")]
-        public async Task<ActionResult<dynamic>> AuthenticateVendedor([FromBody] Vendedor Login)
+        [HttpPost, Route("LoginVendedor")]
+        public LoginResult LogarVendedor(Vendedor Novo)
         {
-            using (var ctx = new Contexto())
+            try
             {
-                Criptografia cript = new Criptografia();
-                var Cnpj = Login.Cnpj;
-
-                string senhaCriptografada = ctx.Vendedor
-                    .Where(u => u.Cnpj == Cnpj)
-                    .Select(u => u.Senha)
-                    .FirstOrDefault();
-
-                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
-
-                if (senhaCriptografada == null || Autenticado == false)
-                {
-                    return BadRequest("Usuário ou senha inválidos");
-                }
-
-                var user = ctx.Vendedor
-                    .Where(u => u.Cnpj == Cnpj)
-                    .Select(u => u.Tipo)
-                    .FirstOrDefault();
-
-                var roles = new List<string>();
-                if (user == 0)
-                {
-                    roles.Add("Autenticado");
-                }
-                else if (user == 1)
-                {
-                    roles.Add("Administrador");
-                    roles.Add("Default");
-                }
-
-                var token = TokenServices.GenerateTokenVendedor(Login, roles.ToArray());
-                Login.Senha = "";
-
-                var result = new
-                {
-                    user = Login,
-                    token = token,
-                    role = roles
-                };
-
+                var result = VendasCRUD.LoginVendedor(Novo);
                 return result;
             }
+            catch (Exception err)
+            {
+                throw new ArgumentException("Usuário ou senha inválidos");
+            }
         }
+
+        [HttpPost, Route("LoginTransportadora")]
+        public LoginResult LogarTransportadora(Transportadora Novo)
+        {
+            try
+            {
+                var result = VendasCRUD.LoginTransportadora(Novo);
+                return result;
+            }
+            catch (Exception err)
+            {
+                throw new ArgumentException("Usuário ou senha inválidos");
+            }
+        }
+
+
+        //public async Task<ActionResult<dynamic>> AuthenticateVendedor([FromBody] Vendedor Login)
+        //{
+        //    using (var ctx = new Contexto())
+        //    {
+        //        Criptografia cript = new Criptografia();
+        //        var Cnpj = Login.Cnpj;
+
+        //        string senhaCriptografada = ctx.Vendedor
+        //            .Where(u => u.Cnpj == Cnpj)
+        //            .Select(u => u.Senha)
+        //            .FirstOrDefault();
+
+        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+        //        if (senhaCriptografada == null || Autenticado == false)
+        //        {
+        //            return BadRequest("Usuário ou senha inválidos");
+        //        }
+
+        //        var user = ctx.Vendedor
+        //            .Where(u => u.Cnpj == Cnpj)
+        //            .Select(u => u.Tipo)
+        //            .FirstOrDefault();
+
+        //        var roles = new List<string>();
+        //        if (user == 0)
+        //        {
+        //            roles.Add("Autenticado");
+        //        }
+        //        else if (user == 1)
+        //        {
+        //            roles.Add("Administrador");
+        //            roles.Add("Default");
+        //        }
+
+        //        var token = TokenServices.GenerateTokenVendedor(Login, roles.ToArray());
+        //        Login.Senha = "";
+
+        //        var result = new
+        //        {
+        //            user = Login,
+        //            token = token,
+        //            role = roles
+        //        };
+
+        //        return result;
+        //    }
+        //}
 
         // LOGIN TRANSPORTADORA
 
-        [HttpPost]
-        [Route("LoginTransportadora")]
-        public async Task<ActionResult<dynamic>> AuthenticateTransportadora([FromBody] Transportadora Login)
-        {
-            using (var ctx = new Contexto())
-            {
-                Criptografia cript = new Criptografia();
-                var Cnpj = Login.Cnpj;
+        //[HttpPost]
+        //[Route("LoginTransportadora")]
+        //public async Task<ActionResult<dynamic>> AuthenticateTransportadora([FromBody] Transportadora Login)
+        //{
+        //    using (var ctx = new Contexto())
+        //    {
+        //        Criptografia cript = new Criptografia();
+        //        var Cnpj = Login.Cnpj;
 
-                string senhaCriptografada = ctx.Transportadora
-                    .Where(u => u.Cnpj == Cnpj)
-                    .Select(u => u.Senha)
-                    .FirstOrDefault();
+        //        string senhaCriptografada = ctx.Transportadora
+        //            .Where(u => u.Cnpj == Cnpj)
+        //            .Select(u => u.Senha)
+        //            .FirstOrDefault();
 
-                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
 
-                if (senhaCriptografada == null || Autenticado == false)
-                {
-                    return BadRequest("Usuário ou senha inválidos");
-                }
+        //        if (senhaCriptografada == null || Autenticado == false)
+        //        {
+        //            return BadRequest("Usuário ou senha inválidos");
+        //        }
 
-                var user = ctx.Transportadora
-                    .Where(u => u.Cnpj == Cnpj)
-                    .Select(u => u.Tipo)
-                    .FirstOrDefault();
+        //        var user = ctx.Transportadora
+        //            .Where(u => u.Cnpj == Cnpj)
+        //            .Select(u => u.Tipo)
+        //            .FirstOrDefault();
 
-                var roles = new List<string>();
-                if (user == 0)
-                {
-                    roles.Add("Autenticado");
-                }
-                else if (user == 1)
-                {
-                    roles.Add("Administrador");
-                    roles.Add("Default");
-                }
+        //        var roles = new List<string>();
+        //        if (user == 0)
+        //        {
+        //            roles.Add("Autenticado");
+        //        }
+        //        else if (user == 1)
+        //        {
+        //            roles.Add("Administrador");
+        //            roles.Add("Default");
+        //        }
 
-                var token = TokenServices.GenerateTokenTransportadora(Login, roles.ToArray());
-                Login.Senha = "";
+        //        var token = TokenServices.GenerateTokenTransportadora(Login, roles.ToArray());
+        //        Login.Senha = "";
 
-                var result = new
-                {
-                    user = Login,
-                    token = token,
-                    role = roles
-                };
+        //        var result = new
+        //        {
+        //            user = Login,
+        //            token = token,
+        //            role = roles
+        //        };
 
-                return result;
-            }
-        }
+        //        return result;
+        //    }
+        //}
 
         //CADASTRA UM NOVO CLIENTE
 
@@ -200,7 +241,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna um pedido a partir do Codigo
         [HttpGet("BuscarPedido/{id}")]
-        //[Authorize]
+       [Authorize]
         [SwaggerOperation(Summary = "Busca um pedido especifico")]
         public Pedidos BuscarPedido(int id)
         {
@@ -209,7 +250,7 @@ namespace APIVENDASCORE.Controllers
 
         //RETORNA Lista de Historicos de um Pedido
         [HttpGet("BuscarHistorico/{id}")]
-        //[Authorize]
+       //[Authorize]
         [SwaggerOperation(Summary = "Busca o historico de um pedido especifico")]
         public IEnumerable<HistPedido> BuscarHistorico(int id)
         {
@@ -218,7 +259,7 @@ namespace APIVENDASCORE.Controllers
 
         ////RETORNA data de um pedido entregue
         [HttpGet("DataEntrega/{id}")]
-        //[Authorize]
+       [Authorize]
         [SwaggerOperation(Summary = "Busca a data da entrega de um pedido")]
         public Nullable<DateTime> DataEntrega(int id)
         {
@@ -229,7 +270,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna todos os pedidos
         [HttpGet, Route("ListarPedidos")]
-        //[Authorize]
+       [Authorize]
         public IEnumerable<Pedidos> ListarPedidos()
         {
             return VendasCRUD.ListarPedidos();
@@ -238,7 +279,7 @@ namespace APIVENDASCORE.Controllers
         //Retorna todos os pedidos de um cliente especifico (busca por CPF)
 
         [HttpGet, Route("ListarPedidosCPF/{id}")]
-        //[Authorize]
+       [Authorize]
         public IEnumerable<Pedidos> ListarPedidosCPF(string id)
         {
             return VendasCRUD.ListarPedidosCPF(id);
@@ -246,7 +287,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna todos os pedidos de um certo status (Entregues, Cancelados...)
         [HttpGet, Route("ListarPedidosStatus/{id}")]
-        //[Authorize]
+       [Authorize]
         public IEnumerable<Pedidos> ListarPedidosStatus(int id)
         {
             return VendasCRUD.ListarPedidosStatus(id);
@@ -254,7 +295,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna o total de pedidos
         [HttpGet, Route("TotalPedidosFeitos")]
-        //[Authorize]
+       [Authorize]
         public string TotalPedidos()
         {
             return VendasCRUD.TotalPedidosFeitos();
@@ -265,7 +306,7 @@ namespace APIVENDASCORE.Controllers
         //INCLUI UM NOVO PEDIDO
 
         [HttpPost, Route("NovoPedido")]
-        //[Authorize]
+       [Authorize]
         public string IncluirPedido(Pedidos Novo)
         {
             try
@@ -281,7 +322,7 @@ namespace APIVENDASCORE.Controllers
 
         //Altera o status de um pedido
         [HttpPost, Route("MudarStatusPedido")]
-        //[Authorize]
+       [Authorize]
         public string MudarStatus(Status Mudou)
         {
             try
@@ -297,7 +338,7 @@ namespace APIVENDASCORE.Controllers
 
         //Faz a avaliação de um pedido por um cliente
         [HttpPost, Route("AvaliarPedido")]
-        //[Authorize]
+       [Authorize]
         public string PedidoAvaliado(AvaliacaoPedidos Info)
         {
             try
@@ -313,7 +354,7 @@ namespace APIVENDASCORE.Controllers
 
         //Faz o cancelamento do Pedido pelo cliente
         [HttpPost, Route("CancelarPedido")]
-        //[Authorize]
+       [Authorize]
         public string PedidoCancelado(AvaliacaoPedidos Info)
         {
             try
@@ -329,7 +370,7 @@ namespace APIVENDASCORE.Controllers
 
         //Devolver pedido durante 7 dias da chegada
         [HttpPost, Route("DevolverPedido")]
-        //[Authorize]
+       [Authorize]
         public string PedidoDevolvido(AvaliacaoPedidos Info)
         {
             try
@@ -345,7 +386,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoTransportadora")]
-        //[Authorize]
+       [Authorize]
         public string DevolverPedidoTransportadora(Status Info)
         {
             try
@@ -360,7 +401,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoVendedor")]
-        //[Authorize]
+       [Authorize]
         public string DevolverPedidoVendedor(Status Info)
         {
             try
@@ -375,7 +416,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoVendedorAceite")]
-        //[Authorize]
+       [Authorize]
         public string DevolverPedidoVendedorAceite(Status Info)
         {
             try

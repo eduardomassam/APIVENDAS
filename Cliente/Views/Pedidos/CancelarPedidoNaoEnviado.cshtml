@@ -19,9 +19,6 @@ else
 }
 
 <style>
-  
-
-
 </style>
 
 <!DOCTYPE html>
@@ -41,13 +38,17 @@ else
             <h4>Cancelamento de Pedido Não Enviado</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.CodPedido, "Código do Pedido:", htmlAttributes: new { @class = "control-label col-md-2 " })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.CodPedido, new { disabled = "disabled", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.CodPedido, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.CodPedido, "Código do Pedido:", htmlAttributes: new { @class = "control-label col-md-2 " })
+            <div class="col-md-10">
+             
+            <h2 style="color:red"> @Html.DisplayFor(model => model.CodPedido)</h2>
+                @Html.ValidationMessageFor(model => model.CodPedido, "", new { @class = "text-danger" })
+
             </div>
+            <br />
+        </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Avaliacao, "Avaliação:", htmlAttributes: new { @class = "control-label col-md-2 label-grande" })

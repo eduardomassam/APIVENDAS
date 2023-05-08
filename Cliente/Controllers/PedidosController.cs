@@ -72,6 +72,13 @@ namespace client.Controllers
         // Metodo para listar os pedidos do client (Via API)
         public async Task<System.Web.Mvc.ActionResult> Listar(string cpf, IEnumerable<string> status)
         {
+            var token2 = Request.Cookies["token"]?.Value;
+
+            if (token2 is null)
+            {
+                return View("Expirada");
+            }
+
             using (var httpClient = new HttpClient())
             {
                 var token = Request.Cookies["token"].Value;
@@ -122,6 +129,7 @@ namespace client.Controllers
                     {
                         List<HistPedido> histPedido = (List<HistPedido>)await HistoricoPedido(item.Cod.ToString());
 
+
                         var pedidosHistentregues = histPedido.Where(t => t.Obs == "[TRANSPORTADORA] Pedido Entregue ao comprador").ToList();
 
                         DateTime? dataEntrega = pedidosHistentregues.Select(t => t.DataOcorrencia).FirstOrDefault();
@@ -144,8 +152,15 @@ namespace client.Controllers
         }
 
 
+
         public async Task<List<HistPedido>> HistoricoPedido(string id)
         {
+
+            var token2 = Request.Cookies["token"]?.Value;
+            if (token2 is null)
+            {
+                return null;
+            }
             ViewData["Pedido"] = id;
             var response = await client.GetAsync("api/vendas/BuscarHistorico/" + id);
 
@@ -164,6 +179,14 @@ namespace client.Controllers
 
         public async Task<System.Web.Mvc.ActionResult> HistoricoPedidoCliente(string id)
         {
+
+            var token = Request.Cookies["token"]?.Value;
+
+            if (token is null)
+            {
+                return View("Expirada");
+            }
+
             ViewData["Pedido"] = id;
             var response = await client.GetAsync("api/vendas/BuscarHistorico/" + id);
 
@@ -198,7 +221,8 @@ namespace client.Controllers
         [System.Web.Mvc.HttpPost]
         public async Task<System.Web.Mvc.ActionResult> NovoPedido(Pedidos Novo)
         {
-            var token = Request.Cookies["token"].Value;
+            
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {
@@ -235,7 +259,12 @@ namespace client.Controllers
                 if (response.IsSuccessStatusCode)
                     return RedirectToAction("Listar", "Pedidos", new { cpf = Novo.CPF });
                 else
-                    throw new Exception(response.ReasonPhrase);
+                {
+                    ViewBag.MensagemErro = "Erro ao Solicitar Pedido, favor confirmar os dados preenchidos.";
+                    return View("NovoPedido", Novo);
+                }
+                
+               
             }
         }
 
@@ -244,7 +273,7 @@ namespace client.Controllers
         {
             Session["CodPedido"] = id;
 
-            var token = Request.Cookies["token"].Value;
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {
@@ -275,7 +304,7 @@ namespace client.Controllers
         [System.Web.Mvc.HttpPost]
         public async Task<System.Web.Mvc.ActionResult> ConfirmarPedidoEntregue(AvaliacaoPedido Mudou)
         {
-            var token = Request.Cookies["token"].Value;
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {
@@ -315,7 +344,7 @@ namespace client.Controllers
         {
             Session["CodPedido"] = id;
 
-            var token = Request.Cookies["token"].Value;
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {
@@ -347,7 +376,7 @@ namespace client.Controllers
         [System.Web.Mvc.HttpPost]
         public async Task<System.Web.Mvc.ActionResult> CancelarPedidoNaoEnviado(AvaliacaoPedido Mudou)
         {
-            var token = Request.Cookies["token"].Value;
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {
@@ -386,7 +415,7 @@ namespace client.Controllers
         {
             Session["CodPedido"] = id;
 
-            var token = Request.Cookies["token"].Value;
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {
@@ -418,7 +447,7 @@ namespace client.Controllers
         [System.Web.Mvc.HttpPost]
         public async Task<System.Web.Mvc.ActionResult> DevolverPedido(AvaliacaoPedido Mudou)
         {
-            var token = Request.Cookies["token"].Value;
+            var token = Request.Cookies["token"]?.Value;
 
             if (token is null)
             {

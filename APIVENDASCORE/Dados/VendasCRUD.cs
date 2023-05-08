@@ -1,13 +1,161 @@
 ﻿using APIVENDASCORE.Models;
 using APIVENDASCORE.Services;
 using APIVENDASCORE.Utils;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 
 namespace APIVENDASCORE.Dados
 {
     public class VendasCRUD
     {
-       
+
+
+
+        public static LoginResult Login(Usuario Login)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cpf = Login.Cpf;
+
+                string senhaCriptografada = ctx.Usuario
+                    .Where(u => u.Cpf == Cpf)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    throw new ArgumentException("Usuário ou senha inválidos");
+                }
+
+                var user = ctx.Usuario
+                    .Where(u => u.Cpf == Cpf)
+                    .Select(u => u.Tipo)
+                    .FirstOrDefault();
+
+                var roles = new List<string>();
+                if (user == 0)
+                {
+                    roles.Add("Autenticado");
+                }
+                else if (user == 1)
+                {
+                    roles.Add("Administrador");
+                    roles.Add("Default");
+                }
+
+                var token = TokenServices.GenerateToken(Login, roles.ToArray());
+                Login.Senha = "";
+
+                var result = new LoginResult
+                {
+
+                    token = token
+
+                };
+
+                return result;
+            }
+        }
+
+        public static LoginResult LoginVendedor(Vendedor Login)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cnpj = Login.Cnpj;
+
+                string senhaCriptografada = ctx.Vendedor
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    throw new ArgumentException("Usuário ou senha inválidos");
+                }
+
+                var user = ctx.Vendedor
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Tipo)
+                    .FirstOrDefault();
+
+                var roles = new List<string>();
+                if (user == 0)
+                {
+                    roles.Add("Autenticado");
+                }
+                else if (user == 1)
+                {
+                    roles.Add("Administrador");
+                    roles.Add("Default");
+                }
+
+                var token = TokenServices.GenerateTokenVendedor(Login, roles.ToArray());
+                Login.Senha = "";
+
+                var result = new LoginResult
+                {
+                    token = token
+                };
+
+                return result;
+
+            }
+        }
+
+        public static LoginResult LoginTransportadora(Transportadora Login)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cnpj = Login.Cnpj;
+
+                string senhaCriptografada = ctx.Transportadora
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    throw new ArgumentException("Usuário ou senha inválidos");
+                }
+
+                var user = ctx.Transportadora
+                    .Where(u => u.Cnpj == Cnpj)
+                    .Select(u => u.Tipo)
+                    .FirstOrDefault();
+
+                var roles = new List<string>();
+                if (user == 0)
+                {
+                    roles.Add("Autenticado");
+                }
+                else if (user == 1)
+                {
+                    roles.Add("Administrador");
+                    roles.Add("Default");
+                }
+
+                var token = TokenServices.GenerateTokenTransportadora(Login, roles.ToArray());
+                Login.Senha = "";
+
+                var result = new LoginResult
+                {
+                    token = token
+                };
+
+                return result;
+            }
+        }
 
         //CADASTRA NOVO CLIENTE
 
@@ -22,43 +170,7 @@ namespace APIVENDASCORE.Dados
             }
         }
 
-        //public static Usuario Logar(Usuario Login)
-        //{
-        //    using (var ctx = new Contexto())
-        //    {
-        //        Criptografia cript = new Criptografia();
-        //        var Cpf = Login.Cpf;
 
-        //        string senhaCriptografada = ctx.Usuario
-        //        .Where(u => u.Cpf == Cpf)
-        //        .Select(u => u.Senha)
-        //        .FirstOrDefault();
-
-        //        if (senhaCriptografada==null)
-        //        {
-        //            //return false;
-        //        }
-
-        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
-        //        if(Autenticado) 
-        //        {
-        //            var token = TokenServices.GenerateToken(Login);
-        //            Login.Senha = "";
-
-        //            var result = new
-        //            {
-        //                user = Login,
-        //                token = token
-        //            };
-
-        //            return Login;
-        //        }
-                
-        //        return Login;
-
-              
-        //    }
-        //}
 
         //PESQUISAS
 
@@ -76,7 +188,7 @@ namespace APIVENDASCORE.Dados
         public static IEnumerable<HistPedido> ListarHistorico(int Codigo)
         {
             using (var ctx = new Contexto())
-            {            
+            {
                 var Pesquisa = (from A in ctx.HistPedido where A.CodPed == Codigo select A).ToList();
 
                 return Pesquisa;

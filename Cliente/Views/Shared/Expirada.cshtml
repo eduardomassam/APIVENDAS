@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = null;
 }
+<div align="center">
+    <h2>Sua Sessão Expirou</h2>
 
-<h2>Sua Sessão Expirou</h2>
+    <br /><br />
 
-<br /><br />
+    <h1>Por favor retorne a tela inicial e entre novamente</h1>
 
-<div>Por favor retorne a tela inicial e entre novamente</div>
+    <br /><br />
 
-<br /><br />
-
-@Html.ActionLink("Retornar a tela inicial","../Home/Index")
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">Retornar a tela inicial</a>
+</div>

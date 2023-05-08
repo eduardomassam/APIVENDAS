@@ -60,7 +60,9 @@ namespace Cliente.Controllers
                     // Armazena o token em um cookie
                     var cookie = new HttpCookie("token");
                     cookie.Value = token;
-                    cookie.Expires = DateTime.UtcNow.AddHours(1);
+                    cookie.Expires = DateTime.UtcNow.AddHours(12);
+                    //cookie.Expires = DateTime.UtcNow.AddMinutes(5);
+
                     cookie.HttpOnly = true;
                     cookie.Secure = true;
                     Response.Cookies.Add(cookie);
