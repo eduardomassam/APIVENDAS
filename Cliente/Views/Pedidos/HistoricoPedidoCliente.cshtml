@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Cliente.Models.HistPedido>
+
+@{
+    ViewBag.Title = "HistoricoPedidoCliente";
+
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <h2 align="center">Histórico do Pedido - @ViewData["Pedido"]</h2>
+
+    <div class="my-div-class">
+        @Html.ActionLink("Voltar", "Listar", "Pedidos", new { cpf = ViewBag.CPF }, new { @class = "btn btn-primary btn-lg" })
+    </div>
+    <br /><br />
+    <div class="wrapper">
+        <table align="center" id="myTable" border="1" class="table table-striped">
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.CodPed)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.NroSeq)
+                    </th>*@
+                <th width="200">
+                    <b>Data da Ocorrencia</b>
+                    @*@Html.DisplayNameFor(model => model.DataOcorrencia)*@
+                </th>
+                <th width="500">
+                    <b>Observação</b>
+                    @*@Html.DisplayNameFor(model => model.Obs)*@
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.CodPed)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NroSeq)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataOcorrencia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Obs)
+                    </td>
+                    <!--<td>-->
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    <!--</td>-->
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</body>
+
+</html>

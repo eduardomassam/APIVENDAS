@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+
 
 
 // Namespaces para conexão com API
@@ -22,6 +24,7 @@ using System.Collections.Specialized;
 using Cliente;
 using System.IdentityModel.Tokens.Jwt;
 using Newtonsoft.Json.Linq;
+using Controller = System.Web.Mvc.Controller;
 
 namespace client.Controllers
 {
@@ -45,28 +48,33 @@ namespace client.Controllers
             }
         }
 
+        private T[] ObterItensFiltrados<T>(string chave) where T : struct
+        {
+            var valores = Request.QueryString[chave];
+            if (valores == null)
+            {
+                return new T[0];
+            }
+
+            var itens = valores.Split(',');
+            var result = new List<T>();
+            foreach (var item in itens)
+            {
+                if (Enum.TryParse<T>(item, out var valor))
+                {
+                    result.Add(valor);
+                }
+            }
+
+            return result.ToArray();
+        }
 
         // Metodo para listar os pedidos do client (Via API)
-        public async Task<ActionResult> Listar(string cpf)
+        public async Task<System.Web.Mvc.ActionResult> Listar(string cpf, IEnumerable<string> status)
         {
-            if (cpf == null)
-            {
-                return RedirectToAction("../Home/Index");
-            }
-
-            // Obtém o token armazenado no cookie
-            var token = Request.Cookies["token"].Value;
-
-            if (token == null)
-            {
-
-            }
-
-            string API = "api/vendas/ListarPedidosCPF/" + cpf;
-
             using (var httpClient = new HttpClient())
             {
-
+                var token = Request.Cookies["token"].Value;
                 httpClient.BaseAddress = new Uri("https://localhost:7259/");
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -81,8 +89,17 @@ namespace client.Controllers
                     ModelState.AddModelError(string.Empty, "Acesso não autorizado.");
                     return RedirectToAction("../Home/Index");
                 }
+
+                if (token == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Acesso não autorizado.");
+                    return RedirectToAction("../Home/Index");
+                }
+
+                string API = "api/vendas/ListarPedidosCPF/" + cpftoken;
+
                 ViewBag.CPF = cpfClaim.Value;
-                HttpResponseMessage response = await httpClient.GetAsync("api/vendas/ListarPedidosCPF/" + cpf);
+                HttpResponseMessage response = await httpClient.GetAsync("api/vendas/ListarPedidosCPF/" + cpftoken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -91,11 +108,19 @@ namespace client.Controllers
                     //List<Pedidos> <======== Json
                     var lista = JsonConvert.DeserializeObject<List<Pedidos>>(resultado);
 
+
+                    // Verifica se foi passado algum filtro de status
+                    if (status != null && status.Any())
+                    {
+                        var listaStatus = status.Select(s => Convert.ToInt32(s)).ToList();
+                        lista = lista.Where(p => listaStatus.Contains((int)p.Status)).ToList();
+                    }
+
                     var lstEntregue = lista.Where(l => l.Status == 2);
 
                     foreach (var item in lstEntregue)
                     {
-                        List<HistPedido> histPedido = await HistoricoPedido(item.Cod.ToString());
+                        List<HistPedido> histPedido = (List<HistPedido>)await HistoricoPedido(item.Cod.ToString());
 
                         var pedidosHistentregues = histPedido.Where(t => t.Obs == "[TRANSPORTADORA] Pedido Entregue ao comprador").ToList();
 
@@ -119,8 +144,49 @@ namespace client.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult NovoPedido(string cpf)
+        public async Task<List<HistPedido>> HistoricoPedido(string id)
+        {
+            ViewData["Pedido"] = id;
+            var response = await client.GetAsync("api/vendas/BuscarHistorico/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+
+                var Lista = JsonConvert.DeserializeObject<List<HistPedido>>(resultado).ToList();
+
+
+                return Lista;
+            }
+            else
+                return null;
+        }
+
+        public async Task<System.Web.Mvc.ActionResult> HistoricoPedidoCliente(string id)
+        {
+            ViewData["Pedido"] = id;
+            var response = await client.GetAsync("api/vendas/BuscarHistorico/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var resultado = await response.Content.ReadAsStringAsync();
+
+                var Lista = JsonConvert.DeserializeObject<HistPedido[]>(resultado).ToList();
+                return View(Lista);
+            }
+            else
+                return View();
+        }
+
+
+        //public async Task<IActionResult> HistoricoPedidoView(string id)
+        //{
+        //    List<HistPedido> histPedido = await HistoricoPedido(id);
+        //    return (IActionResult)View("HistoricoPedido", histPedido);
+        //}
+
+        [System.Web.Mvc.HttpGet]
+        public System.Web.Mvc.ActionResult NovoPedido(string cpf)
         {
             Pedidos Novo = new Pedidos();
             //Novo.CPF = Session["CPF"].ToString();
@@ -129,8 +195,8 @@ namespace client.Controllers
             return View(Novo);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> NovoPedido(Pedidos Novo)
+        [System.Web.Mvc.HttpPost]
+        public async Task<System.Web.Mvc.ActionResult> NovoPedido(Pedidos Novo)
         {
             var token = Request.Cookies["token"].Value;
 
@@ -141,10 +207,6 @@ namespace client.Controllers
 
             Novo.Cod = 0; //auto incremento
             Novo.Status = 1; //1º status = NOVO
-                             //Novo.CPF = Session["CPF"].ToString();
-
-
-
 
 
             using (var httpClient = new HttpClient())
@@ -177,8 +239,8 @@ namespace client.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult ConfirmarPedidoEntregue(string id)
+        [System.Web.Mvc.HttpGet]
+        public System.Web.Mvc.ActionResult ConfirmarPedidoEntregue(string id)
         {
             Session["CodPedido"] = id;
 
@@ -210,8 +272,8 @@ namespace client.Controllers
             return View(Novo);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> ConfirmarPedidoEntregue(AvaliacaoPedido Mudou)
+        [System.Web.Mvc.HttpPost]
+        public async Task<System.Web.Mvc.ActionResult> ConfirmarPedidoEntregue(AvaliacaoPedido Mudou)
         {
             var token = Request.Cookies["token"].Value;
 
@@ -248,8 +310,8 @@ namespace client.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult CancelarPedidoNaoEnviado(string id)
+        [System.Web.Mvc.HttpGet]
+        public System.Web.Mvc.ActionResult CancelarPedidoNaoEnviado(string id)
         {
             Session["CodPedido"] = id;
 
@@ -282,8 +344,8 @@ namespace client.Controllers
             return View(Novo);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CancelarPedidoNaoEnviado(AvaliacaoPedido Mudou)
+        [System.Web.Mvc.HttpPost]
+        public async Task<System.Web.Mvc.ActionResult> CancelarPedidoNaoEnviado(AvaliacaoPedido Mudou)
         {
             var token = Request.Cookies["token"].Value;
 
@@ -319,8 +381,8 @@ namespace client.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult DevolverPedido(string id)
+        [System.Web.Mvc.HttpGet]
+        public System.Web.Mvc.ActionResult DevolverPedido(string id)
         {
             Session["CodPedido"] = id;
 
@@ -353,8 +415,8 @@ namespace client.Controllers
             return View(Novo);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> DevolverPedido(AvaliacaoPedido Mudou)
+        [System.Web.Mvc.HttpPost]
+        public async Task<System.Web.Mvc.ActionResult> DevolverPedido(AvaliacaoPedido Mudou)
         {
             var token = Request.Cookies["token"].Value;
 
@@ -388,73 +450,59 @@ namespace client.Controllers
             }
         }
 
-            public async Task<List<HistPedido>> HistoricoPedido(string id)
-            {
-                ViewData["Pedido"] = id;
-                var response = await client.GetAsync("api/vendas/BuscarHistorico/" + id);
 
-                if (response.IsSuccessStatusCode)
+
+
+        //CADASTRAR NOVO CLIENTE
+        [System.Web.Mvc.HttpGet]
+        public System.Web.Mvc.ActionResult NovoCliente(string id)
+        {
+            Session["CodPedido"] = id;
+
+            Usuario Novo = new Usuario();
+            Novo.Cpf = "";
+            Novo.Senha = "";
+            return View(Novo);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public async Task<System.Web.Mvc.ActionResult> NovoCliente(Usuario Novo)
+        {
+            var validator = new UsuarioValidator();
+            var validationResult = validator.Validate(Novo);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
                 {
-                    var resultado = await response.Content.ReadAsStringAsync();
-
-                    var Lista = JsonConvert.DeserializeObject<List<HistPedido>>(resultado).ToList();
-
-
-                    return Lista;
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
-                else
-                    return null;
-            }
 
-
-            //CADASTRAR NOVO CLIENTE
-            [HttpGet]
-            public ActionResult NovoCliente(string id)
-            {
-                Session["CodPedido"] = id;
-
-                Usuario Novo = new Usuario();
-                Novo.Cpf = "";
-                Novo.Senha = "";
                 return View(Novo);
             }
 
-            [HttpPost]
-            public async Task<ActionResult> NovoCliente(Usuario Novo)
+            string json = JsonConvert.SerializeObject(Novo);
+
+            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+            var response = await client.PostAsync("api/vendas/NovoCliente", content);
+
+            if (response.IsSuccessStatusCode)
             {
-                var validator = new UsuarioValidator();
-                var validationResult = validator.Validate(Novo);
-
-                if (!validationResult.IsValid)
-                {
-                    foreach (var error in validationResult.Errors)
-                    {
-                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                    }
-
-                    return View(Novo);
-                }
-
-                string json = JsonConvert.SerializeObject(Novo);
-
-                HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
-
-                var response = await client.PostAsync("api/vendas/NovoCliente", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    ViewBag.MensagemSucesso = "Cliente cadastrado com sucesso!";
-                    //return RedirectToAction("../Home/Index");
-                    return View("NovoCliente", Novo);
-                }
-                else
-                {
-                    ViewBag.MensagemErro = "Erro ao cadastrar cliente";
-                    return View("NovoCliente", Novo);
-                    //throw new Exception(response.ReasonPhrase);
-                }
+                ViewBag.MensagemSucesso = "Cliente cadastrado com sucesso!";
+                //return RedirectToAction("../Home/Index");
+                return View("NovoCliente", Novo);
             }
-
-
+            else
+            {
+                ViewBag.MensagemErro = "Erro ao cadastrar cliente";
+                return View("NovoCliente", Novo);
+                //throw new Exception(response.ReasonPhrase);
+            }
         }
+
+    
+
+
     }
+}

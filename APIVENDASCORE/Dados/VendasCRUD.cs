@@ -84,6 +84,7 @@ namespace APIVENDASCORE.Dados
             }
         }
 
+
         //RETORNA Data Entrega
         public static Nullable<DateTime> DataEntrega(int Codigo)
         {

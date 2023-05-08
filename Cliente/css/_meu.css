@@ -1,3 +1,116 @@
+.filter {
+    max-height: calc(100vh - 50px); /* ajuste a altura de acordo com a sua necessidade */
+    overflow: auto;
+}
+
+.my-div-class {
+    padding-left: 10px; /* você pode ajustar o valor do padding conforme necessário */
+}
+
+.textarea-grande {
+    width: 500px;
+    height: 200px;
+}
+
+th {
+    background-color: #f2f2f2; /* cor de fundo */
+    color: #333; /* cor da fonte */
+    border: 1px solid #ddd; /* borda */
+    padding: 10px; /* espaçamento interno */
+}
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 10px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100%;
+    background-color: lightyellow
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.filter {
+    width: 25%;
+    background-color: lightgray;
+    float: left;
+}
+
+.table {
+    width: 75%;
+    background-color: white;
+    float: right;
+    max-height: 200px;
+    overflow-y: auto;
+    border-collapse: collapse;
+    border:5px;
+}
+
+td, th {
+    border: 2px solid black;
+}
+
+tbody {
+    background-color: cornsilk;
+}
 
 .btn {
     display: inline-block;
@@ -18,7 +131,14 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
+}
+
+
+
+td {
+    text-align: center;
+    vertical-align: middle;
 }
 
     .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
@@ -141,7 +261,8 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-success {
     color: #fff;
     background-color: #5cb85c;
-    border-color: #4cae4c
+    border-color: #4cae4c;
+    text-decoration: none;
 }
 
     .btn-success.focus, .btn-success:focus {
@@ -346,6 +467,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
     font-size: 18px;
     line-height: 1.3333333;
     border-radius: 6px
+
 }
 
 .btn-group-sm > .btn, .btn-sm {

@@ -19,19 +19,19 @@ namespace Cliente.Controllers
     {
 
         // GET: Home
-        public ActionResult Index()
+        public System.Web.Mvc.ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult BadRequest()
+        public System.Web.Mvc.ActionResult BadRequest()
         {
             Response.StatusCode = 400;
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(FormCollection formCollection)
+        public async Task<System.Web.Mvc.ActionResult> Index(System.Web.Mvc.FormCollection formCollection)
         {
 
             var usuario = new Usuario

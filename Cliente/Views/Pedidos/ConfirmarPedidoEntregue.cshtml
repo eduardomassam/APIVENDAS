@@ -4,8 +4,8 @@
     ViewBag.Title = "ConfirmarPedidoEntregue";
 }
 
-<div>
-    @Html.ActionLink("Voltar", "Listar", "Pedidos", new { cpf = ViewBag.CPF }, new { @class = "btn btn-primary btn-lg" })
+<div class="my-div-class">
+    @Html.ActionLink("Voltar", "Listar", "Pedidos", new { cpf = ViewBag.CPF }, new { @class = "btn btn-primary btn-lg", style = "text-decoration: none;" })
 </div>
 
 @if (ViewBag.CPF != null)
@@ -18,19 +18,9 @@ else
 }
 
 <style>
-    .textarea-grande {
-        width: 500px;
-        height: 200px;
-    }
 
 
-    body {
-        background-color: aliceblue;
-    }
 
-    tbody {
-        background-color: cornsilk;
-    }
 </style>
 
 <!DOCTYPE html>
@@ -64,13 +54,14 @@ else
                 @Html.ValidationMessageFor(model => model.Avaliacao, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Confirmar Entrega" class="btn btn-success" />
+                <input type="submit" value="Confirmar Entrega" class="btn btn-success btn-lg" />
             </div>
         </div>
     </div>
+    <br />
     }
 
 
