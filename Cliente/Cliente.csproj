@@ -424,33 +424,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
-    <Content Include="css\_meu2.css" />
+    <Content Include="css\Old\_meu2.css" />
     <Content Include="css\_meu.css" />
-    <Content Include="css\dataTables.bootstrap.css" />
-    <Content Include="css\dataTables.bootstrap.min.css" />
-    <Content Include="css\dataTables.bootstrap4.css" />
-    <Content Include="css\dataTables.bootstrap4.min.css" />
-    <Content Include="css\dataTables.bootstrap5.css" />
-    <Content Include="css\dataTables.bootstrap5.min.css" />
-    <Content Include="css\dataTables.bulma.css" />
-    <Content Include="css\dataTables.bulma.min.css" />
-    <Content Include="css\datatables.css" />
-    <Content Include="css\dataTables.dataTables.css" />
-    <Content Include="css\dataTables.dataTables.min.css" />
-    <Content Include="css\dataTables.foundation.css" />
-    <Content Include="css\dataTables.foundation.min.css" />
-    <Content Include="css\dataTables.jqueryui.css" />
-    <Content Include="css\dataTables.jqueryui.min.css" />
-    <Content Include="css\datatables.min.css" />
-    <Content Include="css\dataTables.semanticui.css" />
-    <Content Include="css\dataTables.semanticui.min.css" />
-    <Content Include="css\jquery.dataTables.css" />
-    <Content Include="css\jquery.dataTables.min.css" />
-    <Content Include="css\bootstrap-theme.css" />
-    <Content Include="css\bootstrap-theme.min.css" />
-    <Content Include="css\bootstrap2.css" />
-    <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\bootstrapold.css" />
+    <Content Include="css\Old\dataTables.bootstrap.css" />
+    <Content Include="css\Old\dataTables.bootstrap.min.css" />
+    <Content Include="css\Old\dataTables.bootstrap4.css" />
+    <Content Include="css\Old\dataTables.bootstrap4.min.css" />
+    <Content Include="css\Old\dataTables.bootstrap5.css" />
+    <Content Include="css\Old\dataTables.bootstrap5.min.css" />
+    <Content Include="css\Old\dataTables.bulma.css" />
+    <Content Include="css\Old\dataTables.bulma.min.css" />
+    <Content Include="css\Old\datatables.css" />
+    <Content Include="css\Old\dataTables.dataTables.css" />
+    <Content Include="css\Old\dataTables.dataTables.min.css" />
+    <Content Include="css\Old\dataTables.foundation.css" />
+    <Content Include="css\Old\dataTables.foundation.min.css" />
+    <Content Include="css\Old\dataTables.jqueryui.css" />
+    <Content Include="css\Old\dataTables.jqueryui.min.css" />
+    <Content Include="css\Old\datatables.min.css" />
+    <Content Include="css\Old\dataTables.semanticui.css" />
+    <Content Include="css\Old\dataTables.semanticui.min.css" />
+    <Content Include="css\Old\jquery.dataTables.css" />
+    <Content Include="css\Old\jquery.dataTables.min.css" />
+    <Content Include="css\Old\bootstrap-theme.css" />
+    <Content Include="css\Old\bootstrap-theme.min.css" />
+    <Content Include="css\Old\bootstrap2.css" />
+    <Content Include="css\Old\bootstrap.min.css" />
+    <Content Include="css\Old\bootstrapold.css" />
     <Content Include="css\main.css" />
     <Content Include="css\util.css" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -519,6 +519,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EsqueceuSenhaViewModel.cs" />
     <Compile Include="Models\AvaliacaoPedido.cs" />
     <Compile Include="Models\HistPedido.cs" />
     <Compile Include="Models\Pedidos.cs" />
@@ -599,12 +600,12 @@
     <Content Include="fonts\poppins\Poppins-SemiBoldItalic.ttf" />
     <Content Include="fonts\poppins\Poppins-Thin.ttf" />
     <Content Include="fonts\poppins\Poppins-ThinItalic.ttf" />
-    <Content Include="css\_button-group.scss" />
-    <Content Include="css\_buttons.scss" />
-    <Content Include="css\bootstrap-theme.css.map" />
-    <Content Include="css\bootstrap-theme.min.css.map" />
-    <Content Include="css\bootstrap.css.map" />
-    <Content Include="css\bootstrap.min.css.map" />
+    <Content Include="css\Old\_button-group.scss" />
+    <Content Include="css\Old\_buttons.scss" />
+    <Content Include="css\Old\bootstrap-theme.css.map" />
+    <Content Include="css\Old\bootstrap-theme.min.css.map" />
+    <Content Include="css\Old\bootstrap.css.map" />
+    <Content Include="css\Old\bootstrap.min.css.map" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Expirada.cshtml" />
@@ -625,6 +626,7 @@
     <Content Include="Views\Shared\_ListarPedidos.cshtml" />
     <Content Include="Views\Pedidos\Listar_backup.cshtml" />
     <Content Include="Views\Pedidos\HistoricoPedidoCliente.cshtml" />
+    <Content Include="Views\Pedidos\RedefinirSenha.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

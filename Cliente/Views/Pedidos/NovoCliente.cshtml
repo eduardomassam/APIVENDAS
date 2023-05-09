@@ -4,6 +4,22 @@
     ViewBag.Title = "NovoCliente";
 }
 
+<style>
+    .text-danger {
+        color: red;
+    }
+</style>
+
+<div class="my-div-class">
+    @Html.ActionLink("Voltar", "Index", "Home", new { cpf = ViewBag.CPF }, new { @class = "btn btn-primary btn-lg" })
+    @if (ViewBag.MensagemErro != null)
+    {
+        <h1 align="center" style="color:red">
+            <div class="alert alert-danger">@ViewBag.MensagemErro</div>
+        </h1>
+    }
+</div>
+
 @if (!String.IsNullOrEmpty(ViewBag.MensagemSucesso))
 {
     <div class="alert alert-success">@ViewBag.MensagemSucesso</div>
@@ -11,33 +27,35 @@
 
 @if (!String.IsNullOrEmpty(ViewBag.MensagemErro))
 {
-   <h2> <div class="alert alert-danger">@ViewBag.MensagemErro</div></h2>
+    <h2> <div class="alert alert-danger">@ViewBag.MensagemErro</div></h2>
 }
 
 
-<h2>Cadastrar Cliente</h2>
+<h2 align="center">Cadastrar Cliente</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-     
+    <div class="form-horizontal" align="center">
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Cpf, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Cpf,"CPF:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @class = "form-control" } })
+                <br />
                 @Html.ValidationMessageFor(model => model.Cpf, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br />
         <div class="form-group">
             @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.PasswordFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
+                <br />
                 @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,19 +67,14 @@
                     @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
                 </div>
             </div>*@
+        <br>
         <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Confirmar" class="btn btn-default" />
+                <input type="submit" value="Cadastrar" class="btn btn-success btn-lg" />
             </div>
         </div>
     </div>
 }
 <br />
-<div>
-    @Html.ActionLink("Ir para o Login", "../Home/Index")
-</div>
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

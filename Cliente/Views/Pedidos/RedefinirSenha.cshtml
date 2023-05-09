@@ -1,0 +1,70 @@
+﻿@model Cliente.Models.EsqueceuSenhaViewModel
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="my-div-class">
+    @Html.ActionLink("Voltar", "Index", "Home", new { cpf = ViewBag.CPF }, new { @class = "btn btn-primary btn-lg" })
+    @if (ViewBag.MensagemErro != null)
+    {
+        <h1 align="center" style="color:red">
+            <div class="alert alert-danger">@ViewBag.MensagemErro</div>
+        </h1>
+    }
+</div>
+
+@if (!String.IsNullOrEmpty(ViewBag.MensagemSucesso))
+{
+    <h2>
+        <div class="alert alert-success" align="center" style="color:green">@ViewBag.MensagemSucesso</div>
+    </h2>
+}
+
+<h2 align="center">Esqueceu a senha</h2>
+<div align="center">
+    @using (Html.BeginForm("AlterarSenha", "Pedidos"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Cpf,"CPF:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.Cpf, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br /><br />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SenhaAtual,"Senha Atual:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.SenhaAtual, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.SenhaAtual, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.SenhaNova,"Senha Nova:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.SenhaNova, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.SenhaNova, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Alterar senha" class="btn btn-success btn-lg" />
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

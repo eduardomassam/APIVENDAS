@@ -68,6 +68,48 @@ namespace client.Controllers
 
             return result.ToArray();
         }
+        public System.Web.Mvc.ActionResult RedefinirSenha()
+        {
+            return View("RedefinirSenha");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public async Task<System.Web.Mvc.ActionResult> AlterarSenha(EsqueceuSenhaViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:7259/");
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var usuario = new EsqueceuSenhaViewModel
+                    {
+                        Cpf = viewModel.Cpf,
+                        SenhaAtual = viewModel.SenhaAtual,
+                        SenhaNova = viewModel.SenhaNova
+                    };
+                    var json = JsonConvert.SerializeObject(usuario);
+                    var content = new StringContent(json, Encoding.Unicode, "application/json");
+
+                    var response = await httpClient.PostAsync("api/vendas/RedefinirSenha", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ViewBag.MensagemSucesso = "Senha alterada com sucesso!";
+                        return View("RedefinirSenha", viewModel);
+                    }
+                    else
+                    {
+                        ViewBag.MensagemErro = "Erro ao redefinir a senha, favor confirmar os dados preenchidos.";
+                        return View("RedefinirSenha", viewModel);
+                    }
+                }
+            }
+            else
+            {
+                return View("RedefinirSenha", viewModel);
+            }
+        }
 
         // Metodo para listar os pedidos do client (Via API)
         public async Task<System.Web.Mvc.ActionResult> Listar(string cpf, IEnumerable<string> status)

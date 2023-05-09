@@ -1,6 +1,7 @@
 ﻿using APIVENDASCORE.Models;
 using APIVENDASCORE.Services;
 using APIVENDASCORE.Utils;
+using Cliente.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,33 @@ namespace APIVENDASCORE.Dados
     {
 
 
+        public static EsqueceuSenhaViewModel TrocarSenha(EsqueceuSenhaViewModel Novo)
+        {
+            using (var ctx = new Contexto())
+            {
+                Criptografia cript = new Criptografia();
+                var Cpf = Novo.Cpf;
+
+                string senhaCriptografada = ctx.Usuario
+                    .Where(u => u.Cpf == Cpf)
+                    .Select(u => u.Senha)
+                    .FirstOrDefault();
+
+                var usuario = ctx.Usuario.SingleOrDefault(u => u.Cpf == Cpf);
+
+                bool Autenticado = cript.ComparaMD5(Novo.SenhaAtual, senhaCriptografada);
+
+                if (senhaCriptografada == null || Autenticado == false)
+                {
+                    throw new ArgumentException("Favor verificar os dados");
+                }
+
+                usuario.Senha = cript.RetornarMD5(Novo.SenhaNova);
+                ctx.SaveChanges();
+
+            }
+            return Novo;
+        }
 
         public static LoginResult Login(Usuario Login)
         {
@@ -156,6 +184,8 @@ namespace APIVENDASCORE.Dados
                 return result;
             }
         }
+
+
 
         //CADASTRA NOVO CLIENTE
 
