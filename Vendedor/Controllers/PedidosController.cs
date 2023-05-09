@@ -123,54 +123,6 @@ namespace Vendedor.Controllers
                 return View();
         }
 
-
-
-        [HttpGet]
-        public ActionResult VendedorCancelarPedidoNaoEnviado(string id)
-        {
-            Session["CodPedido"] = id;
-
-            VendedorAvaliacaoPedido Novo = new VendedorAvaliacaoPedido();
-            Novo.CodPedido = Convert.ToInt32(id);
-            Novo.Avaliacao = "Descreva o motivo do cancelamento...";
-
-            return View(Novo);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> VendedorCancelarPedidoNaoEnviado(VendedorAvaliacaoPedido Mudou)
-        {
-            Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
-
-            string json = JsonConvert.SerializeObject(Mudou);
-
-            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
-
-            var response = await client.PostAsync("api/vendas/CancelarPedido", content);
-
-            if (response.IsSuccessStatusCode)
-                return RedirectToAction("ListaPedidos");
-            else
-                throw new Exception(response.ReasonPhrase);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> VendedorAceitarDevolucao(VendedorAvaliacaoPedido Mudou)
-        {
-            Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
-
-            string json = JsonConvert.SerializeObject(Mudou);
-
-            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
-
-            var response = await client.PostAsync("api/vendas/DevolverPedidoVendedorAceite", content);
-
-            if (response.IsSuccessStatusCode)
-                return RedirectToAction("ListaPedidos");
-            else
-                throw new Exception(response.ReasonPhrase);
-        }
-
         public async Task<ActionResult> PedidosDevolvidos()
         {
             var response = await client.GetAsync("api/vendas/listarpedidosstatus/7");
@@ -184,21 +136,69 @@ namespace Vendedor.Controllers
             else return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> VedendorAceitarDevolucao(VendedorAvaliacaoPedido Mudou)
-        {
-            Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
+        //[HttpGet]
+        //public ActionResult VendedorCancelarPedidoNaoEnviado(string id)
+        //{
+        //    Session["CodPedido"] = id;
 
-            string json = JsonConvert.SerializeObject(Mudou);
+        //    VendedorAvaliacaoPedido Novo = new VendedorAvaliacaoPedido();
+        //    Novo.CodPedido = Convert.ToInt32(id);
+        //    Novo.Avaliacao = "Descreva o motivo do cancelamento...";
 
-            HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+        //    return View(Novo);
+        //}
 
-            var response = await client.PostAsync("api/vendas/DevolverPedidoVendedorAceite", content);
+        //[HttpPost]
+        //public async Task<ActionResult> VendedorCancelarPedidoNaoEnviado(VendedorAvaliacaoPedido Mudou)
+        //{
+        //    Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
 
-            if (response.IsSuccessStatusCode)
-                return RedirectToAction("ListaPedidos");
-            else
-                throw new Exception(response.ReasonPhrase);
-        }
+        //    string json = JsonConvert.SerializeObject(Mudou);
+
+        //    HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+        //    var response = await client.PostAsync("api/vendas/CancelarPedido", content);
+
+        //    if (response.IsSuccessStatusCode)
+        //        return RedirectToAction("ListaPedidos");
+        //    else
+        //        throw new Exception(response.ReasonPhrase);
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult> VendedorAceitarDevolucao(VendedorAvaliacaoPedido Mudou)
+        //{
+        //    Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
+
+        //    string json = JsonConvert.SerializeObject(Mudou);
+
+        //    HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+        //    var response = await client.PostAsync("api/vendas/DevolverPedidoVendedorAceite", content);
+
+        //    if (response.IsSuccessStatusCode)
+        //        return RedirectToAction("ListaPedidos");
+        //    else
+        //        throw new Exception(response.ReasonPhrase);
+        //}
+
+
+
+        //[HttpPost]
+        //public async Task<ActionResult> VedendorAceitarDevolucao(VendedorAvaliacaoPedido Mudou)
+        //{
+        //    Mudou.CodPedido = Convert.ToInt32(Session["CodPedido"].ToString());
+
+        //    string json = JsonConvert.SerializeObject(Mudou);
+
+        //    HttpContent content = new StringContent(json, Encoding.Unicode, "application/json");
+
+        //    var response = await client.PostAsync("api/vendas/DevolverPedidoVendedorAceite", content);
+
+        //    if (response.IsSuccessStatusCode)
+        //        return RedirectToAction("ListaPedidos");
+        //    else
+        //        throw new Exception(response.ReasonPhrase);
+        //}
     }
 }

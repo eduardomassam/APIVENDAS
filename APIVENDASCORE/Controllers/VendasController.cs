@@ -241,7 +241,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna um pedido a partir do Codigo
         [HttpGet("BuscarPedido/{id}")]
-       [Authorize]
+        //[Authorize]
         [SwaggerOperation(Summary = "Busca um pedido especifico")]
         public Pedidos BuscarPedido(int id)
         {
@@ -250,7 +250,7 @@ namespace APIVENDASCORE.Controllers
 
         //RETORNA Lista de Historicos de um Pedido
         [HttpGet("BuscarHistorico/{id}")]
-       //[Authorize]
+       ////[Authorize]
         [SwaggerOperation(Summary = "Busca o historico de um pedido especifico")]
         public IEnumerable<HistPedido> BuscarHistorico(int id)
         {
@@ -259,7 +259,7 @@ namespace APIVENDASCORE.Controllers
 
         ////RETORNA data de um pedido entregue
         [HttpGet("DataEntrega/{id}")]
-       [Authorize]
+       //[Authorize]
         [SwaggerOperation(Summary = "Busca a data da entrega de um pedido")]
         public Nullable<DateTime> DataEntrega(int id)
         {
@@ -270,7 +270,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna todos os pedidos
         [HttpGet, Route("ListarPedidos")]
-       [Authorize]
+       //[Authorize]
         public IEnumerable<Pedidos> ListarPedidos()
         {
             return VendasCRUD.ListarPedidos();
@@ -279,7 +279,7 @@ namespace APIVENDASCORE.Controllers
         //Retorna todos os pedidos de um cliente especifico (busca por CPF)
 
         [HttpGet, Route("ListarPedidosCPF/{id}")]
-       [Authorize]
+       //[Authorize]
         public IEnumerable<Pedidos> ListarPedidosCPF(string id)
         {
             return VendasCRUD.ListarPedidosCPF(id);
@@ -287,7 +287,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna todos os pedidos de um certo status (Entregues, Cancelados...)
         [HttpGet, Route("ListarPedidosStatus/{id}")]
-       [Authorize]
+       //[Authorize]
         public IEnumerable<Pedidos> ListarPedidosStatus(int id)
         {
             return VendasCRUD.ListarPedidosStatus(id);
@@ -295,7 +295,7 @@ namespace APIVENDASCORE.Controllers
 
         //Retorna o total de pedidos
         [HttpGet, Route("TotalPedidosFeitos")]
-       [Authorize]
+       //[Authorize]
         public string TotalPedidos()
         {
             return VendasCRUD.TotalPedidosFeitos();
@@ -306,7 +306,7 @@ namespace APIVENDASCORE.Controllers
         //INCLUI UM NOVO PEDIDO
 
         [HttpPost, Route("NovoPedido")]
-       [Authorize]
+       //[Authorize]
         public string IncluirPedido(Pedidos Novo)
         {
             try
@@ -322,7 +322,7 @@ namespace APIVENDASCORE.Controllers
 
         //Altera o status de um pedido
         [HttpPost, Route("MudarStatusPedido")]
-       [Authorize]
+       //[Authorize]
         public string MudarStatus(Status Mudou)
         {
             try
@@ -338,7 +338,7 @@ namespace APIVENDASCORE.Controllers
 
         //Faz a avaliação de um pedido por um cliente
         [HttpPost, Route("AvaliarPedido")]
-       [Authorize]
+       //[Authorize]
         public string PedidoAvaliado(AvaliacaoPedidos Info)
         {
             try
@@ -354,7 +354,7 @@ namespace APIVENDASCORE.Controllers
 
         //Faz o cancelamento do Pedido pelo cliente
         [HttpPost, Route("CancelarPedido")]
-       [Authorize]
+       //[Authorize]
         public string PedidoCancelado(AvaliacaoPedidos Info)
         {
             try
@@ -370,7 +370,7 @@ namespace APIVENDASCORE.Controllers
 
         //Devolver pedido durante 7 dias da chegada
         [HttpPost, Route("DevolverPedido")]
-       [Authorize]
+       //[Authorize]
         public string PedidoDevolvido(AvaliacaoPedidos Info)
         {
             try
@@ -386,7 +386,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoTransportadora")]
-       [Authorize]
+       //[Authorize]
         public string DevolverPedidoTransportadora(Status Info)
         {
             try
@@ -401,7 +401,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoVendedor")]
-       [Authorize]
+       //[Authorize]
         public string DevolverPedidoVendedor(Status Info)
         {
             try
@@ -416,7 +416,7 @@ namespace APIVENDASCORE.Controllers
         }
 
         [HttpPost, Route("DevolverPedidoVendedorAceite")]
-       [Authorize]
+       //[Authorize]
         public string DevolverPedidoVendedorAceite(Status Info)
         {
             try

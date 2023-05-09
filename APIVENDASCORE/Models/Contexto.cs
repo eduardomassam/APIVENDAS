@@ -10,12 +10,12 @@ namespace APIVENDASCORE.Models
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=Vendas;User ID=sa;Password=sa;TrustServerCertificate=true;",
-        sqlServerOptionsAction: sqlOptions =>
+            optionsbuilder.UseSqlServer("data source=localhost;initial catalog=vendas;user id=sa;password=sa;trustservercertificate=true;",
+        sqlServerOptionsAction: sqloptions =>
         {
-            sqlOptions.EnableRetryOnFailure(
+            sqloptions.EnableRetryOnFailure(
                 maxRetryCount: 5, // número máximo de tentativas de conexão
                 maxRetryDelay: TimeSpan.FromSeconds(30), // tempo máximo de espera entre tentativas
                 errorNumbersToAdd: null
