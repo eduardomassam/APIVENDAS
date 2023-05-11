@@ -267,6 +267,7 @@ namespace client.Controllers
 
             Novo.Cod = 0; //auto incremento
             Novo.Status = 1; //1º status = NOVO
+            Novo.NomeCliente = "";
 
 
             using (var httpClient = new HttpClient())

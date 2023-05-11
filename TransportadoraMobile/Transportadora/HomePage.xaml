@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Transportadora.HomePage">
+    <ContentPage.Content>
+        <StackLayout Padding="40" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+
+            <Label Text="Olá Administrador!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Button
+                VerticalOptions="Center"
+                Text="Pedidos a Retirar"
+                TextColor="White"
+                BackgroundColor="#4682B4"
+                BorderColor="White"
+                BorderWidth="1.5"
+                CornerRadius="50"
+                Clicked="Button_Clicked_Retirar"
+                ></Button>
+
+            <Button
+                VerticalOptions="Center"
+                Text="Pedidos a Entregar"
+                TextColor="White"
+                BackgroundColor="#4682B4"
+                BorderColor="White"
+                BorderWidth="1.5"
+                CornerRadius="50"
+                Clicked="Button_Clicked_Aentregar"
+                ></Button>
+
+            <Button
+                VerticalOptions="Center"
+                Text="Pedidos Entregues"
+                TextColor="White"
+                BackgroundColor="#4682B4"
+                BorderColor="White"
+                BorderWidth="1.5"
+                CornerRadius="50"
+                Clicked="Button_Clicked_Entregues"
+                ></Button>
+
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>
+

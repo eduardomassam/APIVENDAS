@@ -112,9 +112,9 @@
                     <b>Código</b>
                 </th>
 
-                <th>
+                @*<th>
                     <b>Cliente</b>
-                </th>
+                </th>*@
 
                 <th>
                     <b>Produto</b>
@@ -145,9 +145,9 @@
                     <td>
                         <a href="@Url.Action("HistoricoPedidoCliente", "Pedidos", new { id = item.Cod })"> @Html.DisplayFor(modelItem => item.Cod) </a>
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.NomeCliente)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.Produto)
                     </td>

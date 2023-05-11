@@ -10,31 +10,31 @@ namespace APIVENDASCORE.Models
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)
-        {
-            optionsbuilder.UseSqlServer("data source=localhost;initial catalog=vendas;user id=sa;password=sa;trustservercertificate=true;",
-        sqlServerOptionsAction: sqloptions =>
-        {
-            sqloptions.EnableRetryOnFailure(
-                maxRetryCount: 5, // número máximo de tentativas de conexão
-                maxRetryDelay: TimeSpan.FromSeconds(30), // tempo máximo de espera entre tentativas
-                errorNumbersToAdd: null
-            );
-        });
-        }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)
         //{
-        //    optionsBuilder.UseSqlServer("Data Source=localhost,22;Initial Catalog=Vendas;User ID=sa;Password=Docker158*@!;TrustServerCertificate=true;",
-        //        sqlServerOptionsAction: sqlOptions =>
-        //        {
-        //            sqlOptions.EnableRetryOnFailure(
-        //                maxRetryCount: 5, // número máximo de tentativas de conexão
-        //                maxRetryDelay: TimeSpan.FromSeconds(30), // tempo máximo de espera entre tentativas
-        //                errorNumbersToAdd: null
-        //            );
-        //        });
+        //    optionsbuilder.UseSqlServer("data source=localhost;initial catalog=vendas;user id=sa;password=sa;trustservercertificate=true;",
+        //sqlServerOptionsAction: sqloptions =>
+        //{
+        //    sqloptions.EnableRetryOnFailure(
+        //        maxRetryCount: 5, // número máximo de tentativas de conexão
+        //        maxRetryDelay: TimeSpan.FromSeconds(30), // tempo máximo de espera entre tentativas
+        //        errorNumbersToAdd: null
+        //    );
+        //});
         //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=localhost,22;Initial Catalog=Vendas;User ID=sa;Password=Docker158*@!;TrustServerCertificate=true;",
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5, // número máximo de tentativas de conexão
+                        maxRetryDelay: TimeSpan.FromSeconds(30), // tempo máximo de espera entre tentativas
+                        errorNumbersToAdd: null
+                    );
+                });
+        }
 
         // Para o NroSeq ser incremental
         protected override void OnModelCreating(ModelBuilder modelBuilder)

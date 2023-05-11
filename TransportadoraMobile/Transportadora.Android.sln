@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportadora.Android", "Transportadora.Android\Transportadora.Android.csproj", "{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transportadora", "Transportadora\Transportadora.csproj", "{F0CA2E03-D331-4002-AE01-7C064719193A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CAC1FB9-BDB4-45F7-8D83-08472C0AF6AE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F0CA2E03-D331-4002-AE01-7C064719193A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CA2E03-D331-4002-AE01-7C064719193A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CA2E03-D331-4002-AE01-7C064719193A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CA2E03-D331-4002-AE01-7C064719193A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0ADBD267-DCD5-456F-A903-837DBADAC5D9}
+	EndGlobalSection
+EndGlobal

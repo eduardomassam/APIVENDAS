@@ -18,6 +18,11 @@ namespace Cliente.Models
         [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$", ErrorMessage = "A senha deve ter pelo menos 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula e um número.")]
         public string Senha { get; set; }
         public int Tipo { get; set; }
-        
+
+        //[Required(AllowEmptyStrings = true)] 
+        public string NomeCliente { get; set; } = "";
+
+
+
     }
 }
