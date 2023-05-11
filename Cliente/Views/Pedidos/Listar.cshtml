@@ -2,7 +2,6 @@
 @using Cliente.Utils;
 @using Cliente.Enum;
 
-
 @{
     ViewBag.Title = "Listar";
 }
@@ -10,202 +9,180 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    @*<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.1.2/css/searchPanes.dataTables.min.css" />
-
-
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdn.datatables.net/searchpanes/2.1.2/js/dataTables.searchPanes.min.js"></script>*@
-
-    <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable({
-                "searching": false
-            });
-        });
-    </script>
-
-    <style>
-    </style>
-
-
-
+<style>
+    body {
+        background-color: aliceblue;
+    }
+    th {
+        background-color: orange;
+    }
+    td{
+        background-color: lightyellow;
+    }
+    form {
+        background-color: lightyellow;
+    }
+</style>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="filter">
-            @if (ViewBag.CPF != null)
-            {
-                <h2 align="center">Meus Pedidos - @ViewBag.CPF</h2>
-            }
-            else
-            {
-                <h2>Meus Pedidos</h2>
-            }
-            <br />
-            <div class="text-center" align="center">
-                @Html.ActionLink("Novo pedido", "NovoPedido", new { cpf = ViewBag.CPF }, new { @class = "btn btn-success btn-lg" })
-            </div>
-            <br /><br />
-
-
-                  <form method="get" action="/Pedidos/Listar" align="center">
-                      <fieldset>
-                          <legend>Selecione os status:</legend>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="1">
-                              <span class="checkmark"></span> Feito
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="2">
-                              <span class="checkmark"></span> Entregue
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="3">
-                              <span class="checkmark"></span> Cancelado
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="4">
-                              <span class="checkmark"></span> Avaliado
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="5">
-                              <span class="checkmark"></span> Devolvido Cliente
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="6">
-                              <span class="checkmark"></span> Devolvido Transportadora
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="7">
-                              <span class="checkmark"></span> Devolvido Vendedor
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="8">
-                              <span class="checkmark"></span> Devolvido com Sucesso
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="9">
-                              <span class="checkmark"></span> Enviado
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="10">
-                              <span class="checkmark"></span> Devolução Aceita
-                          </label>
-                          <br>
-                          <label class="checkbox-container">
-                              <input type="checkbox" name="status" value="11">
-                              <span class="checkmark"></span> Em Transporte
-                          </label>
-                      </fieldset>
-                      <br /><br />
-                      <button class="btn btn-primary btn-lg" type="submit">Filtrar</button>
-                      <br /><br />
-                      <form method="get" action="/Pedidos/Listar" align="center">
-                          <button class="btn btn-primary btn-lg" type="submit">Limpar Filtro</button>
-                      </form>
-                  </form>
-            <br />
-            <br />
-        </div>
-        <br /><br />
-      
-
-
-            <table id="myTable" class="table table-striped" style="width:100%" border="1px">
-                <thead>
-                    <tr>
-                        <th>
-                            <b>Código</b>
-                        </th>
-
-                        <th>
-                            <b>Cliente</b>
-                        </th>
-
-                        <th>
-                            <b>Produto</b>
-                        </th>
-
-                        <th>
-                            <b>Quantidade</b>
-                        </th>
-
-                        <th>
-                            <b>Status</b>
-                        </th>
-
-                        <th>
-                            <b>Cancelar/Confirmar Entrega</b>
-                        </th>
-
-                        <th>
-                            <b>Devolver Pedido</b>
-                        </th>
-
-
-                    </tr>
-                </thead>
-
-                @foreach (var item in Model)
-                {
-                    <tbody>
-                        <tr>
-                            <td>
-                                <a href="@Url.Action("HistoricoPedidoCliente", "Pedidos", new { id = item.Cod })"> @Html.DisplayFor(modelItem => item.Cod) </a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NomeCliente)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Produto)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Quantidade)
-                            </td>
-                            <td>
-                                @Html.DisplayEnumFor(modelItem => item.Status)
-                            </td>
-                            <td>
-
-                                @if (item.Status == 2)
-                                {
-                                    <button type="button" class="btn btn-success btn-lg">@Html.ActionLink("Confirmar Entrega", "ConfirmarPedidoEntregue", new { id = item.Cod }, new { @class = "text-white", style = "text-decoration: none;" })</button>
-                                }
-
-                                @if (item.Status == 1)
-                                {
-                                    <button type="button" class="btn btn-danger btn-lg">@Html.ActionLink("Cancelar Entrega", "CancelarPedidoNaoEnviado", new { id = item.Cod }, new { @class = "text-white", style = "text-decoration: none;" })</button>
-                                }
-
-
-                            </td>
-                            <td>
-                                @if (item.Status == 2 && item.IsEnviar == true)
-                                {
-                                    <button class="btn btn-warning btn-lg" type="button" onclick="location.href='@Url.Action("DevolverPedido", new { id = item.Cod })'">Devolver Pedido</button>
-                                }
-
-
-                            </td>
-                        </tr>
-
-                    </tbody>
-                }
-
-            </table>
+    @if (ViewBag.CPF != null)
+    {
+        <h2 align="center">Meus Pedidos - @ViewBag.CPF</h2>
+    }
+    else
+    {
+        <h2>Meus Pedidos</h2>
+    }
+    <br />
+    <div class="text-center" align="center">
+        @Html.ActionLink("Novo pedido", "NovoPedido", new { cpf = ViewBag.CPF }, new { @class = "btn btn-success btn-lg" })
     </div>
+    <br />
+    <form method="get" action="/Pedidos/Listar" align="center">
+        <fieldset>
+            <legend>Selecione os status:</legend>
+            <label>
+                <input type="checkbox" name="status" value="1">
+                <span class="checkmark"></span> Feito
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="2">
+                <span class="checkmark"></span> Entregue
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="3">
+                <span class="checkmark"></span> Cancelado
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="4">
+                <span class="checkmark"></span> Avaliado
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="5">
+                <span class="checkmark"></span> Devolvido Cliente
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="6">
+                <span class="checkmark"></span> Devolvido Transportadora
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="7">
+                <span class="checkmark"></span> Devolvido Vendedor
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="8">
+                <span class="checkmark"></span> Devolvido com Sucesso
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="9">
+                <span class="checkmark"></span> Enviado
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="10">
+                <span class="checkmark"></span> Devolução Aceita
+            </label>
+
+            <label>
+                <input type="checkbox" name="status" value="11">
+                <span class="checkmark"></span> Em Transporte
+            </label>
+ 
+        </fieldset>
+        <br />
+        <button class="btn btn-primary btn-lg" type="submit">Filtrar</button>
+
+        <button class="btn btn-primary btn-lg" type="submit">Limpar Filtro</button>
+    </form>
+
+    <br /><br />
+
+    <table class="table table-striped" style="width:100%" border="1px">
+        <thead>
+            <tr>
+                <th>
+                    <b>Código</b>
+                </th>
+
+                <th>
+                    <b>Cliente</b>
+                </th>
+
+                <th>
+                    <b>Produto</b>
+                </th>
+
+                <th>
+                    <b>Quantidade</b>
+                </th>
+
+                <th>
+                    <b>Status</b>
+                </th>
+
+                <th>
+                    <b>Cancelar/Confirmar Entrega</b>
+                </th>
+
+                <th>
+                    <b>Devolver Pedido</b>
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="@Url.Action("HistoricoPedidoCliente", "Pedidos", new { id = item.Cod })"> @Html.DisplayFor(modelItem => item.Cod) </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeCliente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Produto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                    <td>
+                        @Html.DisplayEnumFor(modelItem => item.Status)
+                    </td>
+                    <td>
+
+                        @if (item.Status == 2)
+                        {
+                            <button type="button" class="btn btn-success btn-lg">@Html.ActionLink("Confirmar Entrega", "ConfirmarPedidoEntregue", new { id = item.Cod }, new { @class = "text-white", style = "text-decoration: none;" })</button>
+                        }
+
+                        @if (item.Status == 1)
+                        {
+                            <button type="button" class="btn btn-danger btn-lg">@Html.ActionLink("Cancelar Entrega", "CancelarPedidoNaoEnviado", new { id = item.Cod }, new { @class = "text-white", style = "text-decoration: none;" })</button>
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.Status == 2 && item.IsEnviar == true)
+                        {
+                            <button class="btn btn-warning btn-lg" type="button" onclick="location.href='@Url.Action("DevolverPedido", new { id = item.Cod })'">Devolver Pedido</button>
+                        }
+
+
+                    </td>
+                </tr>
+
+            </tbody>
+        }
+    </table>
 </body>
 </html>
 

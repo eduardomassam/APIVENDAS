@@ -25,6 +25,7 @@ using Cliente;
 using System.IdentityModel.Tokens.Jwt;
 using Newtonsoft.Json.Linq;
 using Controller = System.Web.Mvc.Controller;
+using System.Net;
 
 namespace client.Controllers
 {
@@ -242,13 +243,6 @@ namespace client.Controllers
             else
                 return View();
         }
-
-
-        //public async Task<IActionResult> HistoricoPedidoView(string id)
-        //{
-        //    List<HistPedido> histPedido = await HistoricoPedido(id);
-        //    return (IActionResult)View("HistoricoPedido", histPedido);
-        //}
 
         [System.Web.Mvc.HttpGet]
         public System.Web.Mvc.ActionResult NovoPedido(string cpf)
@@ -561,19 +555,27 @@ namespace client.Controllers
             if (response.IsSuccessStatusCode)
             {
                 ViewBag.MensagemSucesso = "Cliente cadastrado com sucesso!";
-                //return RedirectToAction("../Home/Index");
+                return View("NovoCliente", Novo);
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                string mensagemErro = await response.Content.ReadAsStringAsync();
+                if (mensagemErro.Contains("Já existe um registro"))
+                {
+                    ViewBag.MensagemErro = "Já existe um cliente cadastrado com este CPF.";
+                }
+                else
+                {
+                    ViewBag.MensagemErro = mensagemErro;
+                }
                 return View("NovoCliente", Novo);
             }
             else
             {
-                ViewBag.MensagemErro = "Erro ao cadastrar cliente";
+                ViewBag.MensagemErro = "Erro ao cadastrar cliente.";
                 return View("NovoCliente", Novo);
-                //throw new Exception(response.ReasonPhrase);
             }
         }
-
-    
-
 
     }
 }

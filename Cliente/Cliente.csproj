@@ -423,7 +423,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\old\Site.css" />
     <Content Include="css\Old\_meu2.css" />
     <Content Include="css\_meu.css" />
     <Content Include="css\Old\dataTables.bootstrap.css" />
@@ -463,31 +463,31 @@
     <Content Include="images\img-01.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\slide-img.png" />
-    <Content Include="js\dataTables.bootstrap.js" />
-    <Content Include="js\dataTables.bootstrap.min.js" />
-    <Content Include="js\dataTables.bootstrap4.js" />
-    <Content Include="js\dataTables.bootstrap4.min.js" />
-    <Content Include="js\dataTables.bootstrap5.js" />
-    <Content Include="js\dataTables.bootstrap5.min.js" />
-    <Content Include="js\dataTables.bulma.js" />
-    <Content Include="js\dataTables.bulma.min.js" />
-    <Content Include="js\dataTables.dataTables.js" />
-    <Content Include="js\dataTables.dataTables.min.js" />
-    <Content Include="js\dataTables.foundation.js" />
-    <Content Include="js\dataTables.foundation.min.js" />
-    <Content Include="js\dataTables.jqueryui.js" />
-    <Content Include="js\dataTables.jqueryui.min.js" />
-    <Content Include="js\datatables.js" />
-    <Content Include="js\datatables.min.js" />
-    <Content Include="js\dataTables.semanticui.js" />
-    <Content Include="js\dataTables.semanticui.min.js" />
-    <Content Include="js\jquery.dataTables.js" />
-    <Content Include="js\jquery.dataTables.min.js" />
-    <Content Include="Scripts\filtro.js.js" />
-    <Content Include="Scripts\jquery-3.6.0.min.js.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="js\old\dataTables.bootstrap.js" />
+    <Content Include="js\old\dataTables.bootstrap.min.js" />
+    <Content Include="js\old\dataTables.bootstrap4.js" />
+    <Content Include="js\old\dataTables.bootstrap4.min.js" />
+    <Content Include="js\old\dataTables.bootstrap5.js" />
+    <Content Include="js\old\dataTables.bootstrap5.min.js" />
+    <Content Include="js\old\dataTables.bulma.js" />
+    <Content Include="js\old\dataTables.bulma.min.js" />
+    <Content Include="js\old\dataTables.dataTables.js" />
+    <Content Include="js\old\dataTables.dataTables.min.js" />
+    <Content Include="js\old\dataTables.foundation.js" />
+    <Content Include="js\old\dataTables.foundation.min.js" />
+    <Content Include="js\old\dataTables.jqueryui.js" />
+    <Content Include="js\old\dataTables.jqueryui.min.js" />
+    <Content Include="js\old\datatables.js" />
+    <Content Include="js\old\datatables.min.js" />
+    <Content Include="js\old\dataTables.semanticui.js" />
+    <Content Include="js\old\dataTables.semanticui.min.js" />
+    <Content Include="js\old\jquery.dataTables.js" />
+    <Content Include="js\old\jquery.dataTables.min.js" />
+    <Content Include="Scripts\old\filtro.js.js" />
+    <Content Include="Scripts\old\jquery-3.6.0.min.js.js" />
+    <Content Include="Scripts\old\modernizr-2.8.3.js" />
+    <Content Include="Scripts\old\bootstrap.min.js" />
+    <Content Include="Scripts\old\jquery-3.4.1.min.js" />
     <Content Include="js\main.js" />
     <Content Include="vendor\animate\animate.css" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.css" />
@@ -609,7 +609,6 @@
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Expirada.cshtml" />
-    <Content Include="Views\Pedidos\Listar.cshtml" />
     <Content Include="Views\Pedidos\NovoPedido.cshtml" />
     <Content Include="Views\Pedidos\CancelarPedidoNaoEnviado.cshtml" />
     <Content Include="Views\Pedidos\ConfirmarPedidoEntregue.cshtml" />
@@ -627,6 +626,7 @@
     <Content Include="Views\Pedidos\Listar_backup.cshtml" />
     <Content Include="Views\Pedidos\HistoricoPedidoCliente.cshtml" />
     <Content Include="Views\Pedidos\RedefinirSenha.cshtml" />
+    <Content Include="Views\Pedidos\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

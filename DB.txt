@@ -151,3 +151,17 @@ GO
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------
+
+
+INSERT INTO StatusPedido (codigo, descricao)
+VALUES (1, 'FEITO'),
+       (2, 'ENTREGUE'),
+       (3, 'CANCELADO'),
+       (4, 'AVALIADO'),
+       (5, 'DEVOLVIDO_CLIENTE'),
+       (6, 'DEVOLVIDO_TRANSPORTADORA'),
+       (7, 'DEVOLVIDO_VENDEDOR'),
+       (8, 'DEVOLVIDO_COM_SUCESSO'),
+       (9, 'ENVIADO'),
+       (10, 'DEVOLUCAO_ACEITA'),
+       (11, 'EM_TRANSPORTE');

@@ -8,6 +8,9 @@
     .text-danger {
         color: red;
     }
+    .alert-success {
+        color: green;
+    }
 </style>
 
 <div class="my-div-class">
@@ -22,13 +25,11 @@
 
 @if (!String.IsNullOrEmpty(ViewBag.MensagemSucesso))
 {
-    <div class="alert alert-success">@ViewBag.MensagemSucesso</div>
+    <h1>
+        <div class="alert alert-success" align="center">@ViewBag.MensagemSucesso</div>
+    </h1>
 }
 
-@if (!String.IsNullOrEmpty(ViewBag.MensagemErro))
-{
-    <h2> <div class="alert alert-danger">@ViewBag.MensagemErro</div></h2>
-}
 
 
 <h2 align="center">Cadastrar Cliente</h2>

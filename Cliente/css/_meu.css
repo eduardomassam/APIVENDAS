@@ -1,6 +1,60 @@
+
+/*.table {
+    width: 75%;
+    background-color: white;
+    float: right;
+    max-height: 200px;
+    overflow-y: auto;
+    border-collapse: collapse;
+    border: 5px;
+}
+
+td, th {
+    border: 2px solid black;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #f2f2f2;*/ /* cor de fundo */
+    /*color: #333;*/ /* cor da fonte */
+    /*padding: 10px;*/ /* espaçamento interno */
+/*}
+
+tbody {
+    background-color: cornsilk;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100%;
+    background-color: aliceblue
+}
+
 .filter {
-    max-height: calc(100vh - 50px); /* ajuste a altura de acordo com a sua necessidade */
-    overflow: auto;
+    max-height: calc(100vh - 50px);*/ /* ajuste a altura de acordo com a sua necessidade */
+    /*overflow: auto;
+}*/
+
+
+/* Define o estilo da tabela */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Define a cor de fundo das células de cabeçalho */
+th {
+    background-color: #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/* Define a cor de fundo das células de dados */
+td {
+    background-color: #ffffff;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #dddddd;
 }
 
 .my-div-class {
@@ -20,34 +74,31 @@
     color: red;
 }
 
-th {
-    background-color: #f2f2f2; /* cor de fundo */
-    color: #333; /* cor da fonte */
-    border: 1px solid #ddd; /* borda */
-    padding: 10px; /* espaçamento interno */
-}
+/* FORM DE CHECKBOX */
 
+/*fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .checkbox-container {
-    display: block;
-    position: relative;
-    padding-left: 10px;
+    display: inline-block;
+    width: 150px;
+    margin-right: 10px;
     margin-bottom: 3px;
     cursor: pointer;
     font-size: 15px;
 }
 
     .checkbox-container input {
-        position: absolute;
-        opacity: 0;
+        display: inline-block;
+        vertical-align: middle;
         cursor: pointer;
         height: 0;
         width: 0;
     }
 
 .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 20px;
     width: 20px;
     background-color: #fff;
@@ -80,15 +131,9 @@ th {
     border: solid white;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
-}
+}*/
 
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    min-height: 100%;
-    background-color: aliceblue
-}
+/* NAO USANDO AINDA */
 
 .wrapper {
     display: flex;
@@ -102,23 +147,7 @@ body {
     float: left;
 }
 
-.table {
-    width: 75%;
-    background-color: white;
-    float: right;
-    max-height: 200px;
-    overflow-y: auto;
-    border-collapse: collapse;
-    border:5px;
-}
-
-td, th {
-    border: 2px solid black;
-}
-
-tbody {
-    background-color: cornsilk;
-}
+/* ABAIXO BOTOES E INPUTS */
 
 .btn {
     display: inline-block;
@@ -140,13 +169,6 @@ tbody {
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
-}
-
-
-
-td {
-    text-align: center;
-    vertical-align: middle;
 }
 
     .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {

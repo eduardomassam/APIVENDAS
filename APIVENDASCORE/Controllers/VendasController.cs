@@ -13,6 +13,7 @@ using Microsoft.Owin;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using Cliente.Models;
+using Microsoft.Data.SqlClient;
 
 namespace APIVENDASCORE.Controllers
 {
@@ -79,109 +80,6 @@ namespace APIVENDASCORE.Controllers
             }
         }
 
-
-        //public async Task<ActionResult<dynamic>> AuthenticateVendedor([FromBody] Vendedor Login)
-        //{
-        //    using (var ctx = new Contexto())
-        //    {
-        //        Criptografia cript = new Criptografia();
-        //        var Cnpj = Login.Cnpj;
-
-        //        string senhaCriptografada = ctx.Vendedor
-        //            .Where(u => u.Cnpj == Cnpj)
-        //            .Select(u => u.Senha)
-        //            .FirstOrDefault();
-
-        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
-
-        //        if (senhaCriptografada == null || Autenticado == false)
-        //        {
-        //            return BadRequest("Usuário ou senha inválidos");
-        //        }
-
-        //        var user = ctx.Vendedor
-        //            .Where(u => u.Cnpj == Cnpj)
-        //            .Select(u => u.Tipo)
-        //            .FirstOrDefault();
-
-        //        var roles = new List<string>();
-        //        if (user == 0)
-        //        {
-        //            roles.Add("Autenticado");
-        //        }
-        //        else if (user == 1)
-        //        {
-        //            roles.Add("Administrador");
-        //            roles.Add("Default");
-        //        }
-
-        //        var token = TokenServices.GenerateTokenVendedor(Login, roles.ToArray());
-        //        Login.Senha = "";
-
-        //        var result = new
-        //        {
-        //            user = Login,
-        //            token = token,
-        //            role = roles
-        //        };
-
-        //        return result;
-        //    }
-        //}
-
-        // LOGIN TRANSPORTADORA
-
-        //[HttpPost]
-        //[Route("LoginTransportadora")]
-        //public async Task<ActionResult<dynamic>> AuthenticateTransportadora([FromBody] Transportadora Login)
-        //{
-        //    using (var ctx = new Contexto())
-        //    {
-        //        Criptografia cript = new Criptografia();
-        //        var Cnpj = Login.Cnpj;
-
-        //        string senhaCriptografada = ctx.Transportadora
-        //            .Where(u => u.Cnpj == Cnpj)
-        //            .Select(u => u.Senha)
-        //            .FirstOrDefault();
-
-        //        bool Autenticado = cript.ComparaMD5(Login.Senha, senhaCriptografada);
-
-        //        if (senhaCriptografada == null || Autenticado == false)
-        //        {
-        //            return BadRequest("Usuário ou senha inválidos");
-        //        }
-
-        //        var user = ctx.Transportadora
-        //            .Where(u => u.Cnpj == Cnpj)
-        //            .Select(u => u.Tipo)
-        //            .FirstOrDefault();
-
-        //        var roles = new List<string>();
-        //        if (user == 0)
-        //        {
-        //            roles.Add("Autenticado");
-        //        }
-        //        else if (user == 1)
-        //        {
-        //            roles.Add("Administrador");
-        //            roles.Add("Default");
-        //        }
-
-        //        var token = TokenServices.GenerateTokenTransportadora(Login, roles.ToArray());
-        //        Login.Senha = "";
-
-        //        var result = new
-        //        {
-        //            user = Login,
-        //            token = token,
-        //            role = roles
-        //        };
-
-        //        return result;
-        //    }
-        //}
-
         //CADASTRA UM NOVO CLIENTE
 
         [HttpPost("NovoCliente")]
@@ -193,9 +91,19 @@ namespace APIVENDASCORE.Controllers
                 VendasCRUD.NovoCliente(Novo);
                 return Ok("Cliente cadastrado com sucesso!");
             }
-            catch (Exception err)
+            catch (Exception ex)
             {
-                return BadRequest($"Erro ao cadastrar cliente: {err.Message}");
+                var sqlEx = ex.InnerException as SqlException;
+                if (sqlEx != null && (sqlEx.Number == 2627 || sqlEx.Number == 2601))
+                {
+                    // Ocorreu uma exceção de chave primária ou índice exclusivo duplicado
+                    return BadRequest("Já existe um registro com esses dados.");
+                }
+                else
+                {
+                    // Outro tipo de exceção, tratar de acordo
+                    return BadRequest($"Erro ao cadastrar cliente: {ex.Message}");
+                }
             }
         }
 

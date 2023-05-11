@@ -47,7 +47,7 @@ namespace APIVENDASCORE.Models
                 .Property(hp => hp.NroSeq)
                 .ValueGeneratedOnAdd();
 
-       
+
 
         }
 
